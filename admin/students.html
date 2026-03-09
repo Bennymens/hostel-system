@@ -1,0 +1,870 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Students - Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../client/css/style.css" />
+    <link rel="stylesheet" href="css/admin.css" />
+  </head>
+  <body>
+    <div class="admin-layout">
+      <!-- Mobile Hamburger -->
+      <button class="sidebar-toggle" id="sidebarToggle">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+      <!-- Sidebar -->
+      <aside class="admin-sidebar">
+        <a href="index.html" class="sidebar-link">
+          <i class="fas fa-home"></i> Dashboard
+        </a>
+
+        <div class="sidebar-label">Features</div>
+        <a href="students.html" class="sidebar-link">
+          <i class="fas fa-user-plus"></i> Register Student
+        </a>
+        <a href="students.html" class="sidebar-link active">
+          <i class="fas fa-id-card"></i> View Student Acc.
+        </a>
+        <a href="bookings.html" class="sidebar-link">
+          <i class="fas fa-bookmark"></i> Book Hostel
+        </a>
+        <a href="hostels.html" class="sidebar-link">
+          <i class="fas fa-door-open"></i> Manage Rooms
+        </a>
+
+        <div class="sidebar-label">Settings</div>
+        <a href="settings.html" class="sidebar-link">
+          <i class="fas fa-cog"></i> Settings
+        </a>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="admin-main">
+        <div class="admin-greeting">
+          <h1>Student Accounts</h1>
+        </div>
+
+        <!-- Stat Cards -->
+        <div class="admin-stats">
+          <div class="stat-card">
+            <div class="stat-card-left">
+              <div class="stat-card-value" id="statTotal">14</div>
+              <div class="stat-card-label">Total Students</div>
+            </div>
+            <div class="stat-icon purple"><i class="fas fa-users"></i></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-left">
+              <div class="stat-card-value">12</div>
+              <div class="stat-card-label">Active</div>
+            </div>
+            <div class="stat-icon blue"><i class="fas fa-user-check"></i></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-left">
+              <div class="stat-card-value">2</div>
+              <div class="stat-card-label">Inactive</div>
+            </div>
+            <div class="stat-icon teal"><i class="fas fa-user-slash"></i></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-left">
+              <div class="stat-card-value">5</div>
+              <div class="stat-card-label">New This Month</div>
+            </div>
+            <div class="stat-icon indigo"><i class="fas fa-user-plus"></i></div>
+          </div>
+        </div>
+
+        <!-- Students Table -->
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3>All Students</h3>
+            <button
+              class="action-btn view-btn"
+              id="addStudentBtn"
+              style="
+                width: auto;
+                height: auto;
+                padding: 0.4rem 0.85rem;
+                font-size: 0.82rem;
+                border-radius: 6px;
+                gap: 0.35rem;
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                border: none;
+                background: #dbeafe;
+                color: #2563eb;
+                font-weight: 600;
+              "
+            >
+              <i class="fas fa-plus"></i> Add Student
+            </button>
+          </div>
+          <p class="table-desc">
+            Registered student accounts and their booking status.
+          </p>
+
+          <div class="table-controls">
+            <div class="table-show">
+              Show
+              <select id="entriesCount">
+                <option value="5">5</option>
+                <option value="10" selected>10</option>
+                <option value="25">25</option>
+              </select>
+              entries
+            </div>
+            <div class="table-search">
+              Search: <input type="text" id="tableSearch" />
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="admin-table data-table" id="studentTable">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Name <i class="fas fa-sort"></i></th>
+                  <th>Email <i class="fas fa-sort"></i></th>
+                  <th>Phone <i class="fas fa-sort"></i></th>
+                  <th>School <i class="fas fa-sort"></i></th>
+                  <th>Bookings <i class="fas fa-sort"></i></th>
+                  <th>Status <i class="fas fa-sort"></i></th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="studentTableBody">
+                <tr>
+                  <td>1</td>
+                  <td>Kwame Asante</td>
+                  <td>kwame.asante@ug.edu.gh</td>
+                  <td>024 123 4567</td>
+                  <td>UG, Legon</td>
+                  <td>2</td>
+                  <td><span class="status-badge confirmed">Active</span></td>
+                  <td class="actions-cell">
+                    <button class="action-btn view-btn" title="View">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                    </button>
+                    <button class="action-btn delete-btn" title="Deactivate">
+                      <i class="fas fa-times-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Ama Mensah</td>
+                  <td>ama.mensah@ug.edu.gh</td>
+                  <td>024 234 5678</td>
+                  <td>UG, Legon</td>
+                  <td>1</td>
+                  <td><span class="status-badge confirmed">Active</span></td>
+                  <td class="actions-cell">
+                    <button class="action-btn view-btn" title="View">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                    </button>
+                    <button class="action-btn delete-btn" title="Deactivate">
+                      <i class="fas fa-times-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>Kofi Adjei</td>
+                  <td>kofi.adjei@knust.edu.gh</td>
+                  <td>020 345 6789</td>
+                  <td>KNUST</td>
+                  <td>1</td>
+                  <td><span class="status-badge confirmed">Active</span></td>
+                  <td class="actions-cell">
+                    <button class="action-btn view-btn" title="View">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                    </button>
+                    <button class="action-btn delete-btn" title="Deactivate">
+                      <i class="fas fa-times-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>Abena Osei</td>
+                  <td>abena.osei@ug.edu.gh</td>
+                  <td>024 456 7890</td>
+                  <td>UG, Legon</td>
+                  <td>3</td>
+                  <td><span class="status-badge confirmed">Active</span></td>
+                  <td class="actions-cell">
+                    <button class="action-btn view-btn" title="View">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                    </button>
+                    <button class="action-btn delete-btn" title="Deactivate">
+                      <i class="fas fa-times-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td>Yaw Boateng</td>
+                  <td>yaw.boateng@ucc.edu.gh</td>
+                  <td>020 567 8901</td>
+                  <td>UCC</td>
+                  <td>0</td>
+                  <td><span class="status-badge pending">Inactive</span></td>
+                  <td class="actions-cell">
+                    <button class="action-btn view-btn" title="View">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                    </button>
+                    <button
+                      class="action-btn delete-btn"
+                      title="Activate"
+                      style="background: #d1fae5; color: #059669"
+                    >
+                      <i class="fas fa-check"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>6</td>
+                  <td>Efua Darko</td>
+                  <td>efua.darko@ashesi.edu.gh</td>
+                  <td>054 678 9012</td>
+                  <td>Ashesi</td>
+                  <td>1</td>
+                  <td><span class="status-badge confirmed">Active</span></td>
+                  <td class="actions-cell">
+                    <button class="action-btn view-btn" title="View">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                    </button>
+                    <button class="action-btn delete-btn" title="Deactivate">
+                      <i class="fas fa-times-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>7</td>
+                  <td>Mary A. Martin</td>
+                  <td>mary.martin@ug.edu.gh</td>
+                  <td>024 555 8855</td>
+                  <td>UG, Legon</td>
+                  <td>1</td>
+                  <td><span class="status-badge confirmed">Active</span></td>
+                  <td class="actions-cell">
+                    <button class="action-btn view-btn" title="View">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                    </button>
+                    <button class="action-btn delete-btn" title="Deactivate">
+                      <i class="fas fa-times-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>8</td>
+                  <td>Richard J. Summers</td>
+                  <td>richard.summers@knust.edu.gh</td>
+                  <td>020 565 8800</td>
+                  <td>KNUST</td>
+                  <td>1</td>
+                  <td><span class="status-badge confirmed">Active</span></td>
+                  <td class="actions-cell">
+                    <button class="action-btn view-btn" title="View">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                    </button>
+                    <button class="action-btn delete-btn" title="Deactivate">
+                      <i class="fas fa-times-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>9</td>
+                  <td>Grace M. Owusu</td>
+                  <td>grace.owusu@ug.edu.gh</td>
+                  <td>024 345 6789</td>
+                  <td>UG, Legon</td>
+                  <td>2</td>
+                  <td><span class="status-badge confirmed">Active</span></td>
+                  <td class="actions-cell">
+                    <button class="action-btn view-btn" title="View">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                    </button>
+                    <button class="action-btn delete-btn" title="Deactivate">
+                      <i class="fas fa-times-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>10</td>
+                  <td>Daniel O. Kwarteng</td>
+                  <td>daniel.kwarteng@knust.edu.gh</td>
+                  <td>020 789 1234</td>
+                  <td>KNUST</td>
+                  <td>1</td>
+                  <td><span class="status-badge confirmed">Active</span></td>
+                  <td class="actions-cell">
+                    <button class="action-btn view-btn" title="View">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                    </button>
+                    <button class="action-btn delete-btn" title="Deactivate">
+                      <i class="fas fa-times-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>11</td>
+                  <td>Sophia A. Chen</td>
+                  <td>sophia.chen@ug.edu.gh</td>
+                  <td>024 456 7890</td>
+                  <td>UG, Legon</td>
+                  <td>1</td>
+                  <td><span class="status-badge confirmed">Active</span></td>
+                  <td class="actions-cell">
+                    <button class="action-btn view-btn" title="View">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                    </button>
+                    <button class="action-btn delete-btn" title="Deactivate">
+                      <i class="fas fa-times-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>12</td>
+                  <td>Isaac B. Tetteh</td>
+                  <td>isaac.tetteh@ucc.edu.gh</td>
+                  <td>020 123 4567</td>
+                  <td>UCC</td>
+                  <td>0</td>
+                  <td><span class="status-badge pending">Inactive</span></td>
+                  <td class="actions-cell">
+                    <button class="action-btn view-btn" title="View">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                    </button>
+                    <button
+                      class="action-btn delete-btn"
+                      title="Activate"
+                      style="background: #d1fae5; color: #059669"
+                    >
+                      <i class="fas fa-check"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>13</td>
+                  <td>Felicia N. Asare</td>
+                  <td>felicia.asare@ug.edu.gh</td>
+                  <td>024 890 1234</td>
+                  <td>UG, Legon</td>
+                  <td>1</td>
+                  <td><span class="status-badge confirmed">Active</span></td>
+                  <td class="actions-cell">
+                    <button class="action-btn view-btn" title="View">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                    </button>
+                    <button class="action-btn delete-btn" title="Deactivate">
+                      <i class="fas fa-times-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>14</td>
+                  <td>Michael A. Boateng</td>
+                  <td>michael.boateng@ashesi.edu.gh</td>
+                  <td>054 567 8901</td>
+                  <td>Ashesi</td>
+                  <td>1</td>
+                  <td><span class="status-badge confirmed">Active</span></td>
+                  <td class="actions-cell">
+                    <button class="action-btn view-btn" title="View">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                    </button>
+                    <button class="action-btn delete-btn" title="Deactivate">
+                      <i class="fas fa-times-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="table-footer">
+            <div class="table-info" id="tableInfo">
+              Showing 1 to 10 of 14 entries
+            </div>
+            <div class="table-pagination" id="tablePagination">
+              <button class="page-btn" id="prevPage" disabled>Previous</button>
+              <button class="page-btn page-num active">1</button>
+              <button class="page-btn page-num">2</button>
+              <button class="page-btn" id="nextPage">Next</button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Add Student Modal -->
+    <div class="admin-modal-overlay" id="studentModal">
+      <div class="admin-modal">
+        <h3>Register New Student</h3>
+        <form id="studentForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label>First Name</label>
+              <input
+                type="text"
+                class="form-control"
+                required
+                placeholder="First name"
+              />
+            </div>
+            <div class="form-group">
+              <label>Last Name</label>
+              <input
+                type="text"
+                class="form-control"
+                required
+                placeholder="Last name"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input
+              type="email"
+              class="form-control"
+              required
+              placeholder="student@university.edu.gh"
+            />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Phone</label>
+              <input
+                type="tel"
+                class="form-control"
+                placeholder="024 123 4567"
+              />
+            </div>
+            <div class="form-group">
+              <label>School</label>
+              <select class="form-control">
+                <option>UG, Legon</option>
+                <option>KNUST</option>
+                <option>UCC</option>
+                <option>Ashesi</option>
+                <option>GIMPA</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-actions">
+            <button
+              type="button"
+              class="btn btn-outline"
+              onclick="
+                document
+                  .getElementById('studentModal')
+                  .classList.remove('active')
+              "
+            >
+              Cancel
+            </button>
+            <button type="submit" class="btn btn-primary">Register</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- View Student Detail Modal -->
+    <div class="admin-modal-overlay" id="viewStudentModal">
+      <div class="admin-modal" style="max-width: 600px">
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid #f3f4f6;
+          "
+        >
+          <h3 style="margin: 0; padding: 0; border: none">Student Profile</h3>
+          <button
+            onclick="
+              document
+                .getElementById('viewStudentModal')
+                .classList.remove('active')
+            "
+            style="
+              background: none;
+              border: none;
+              font-size: 1.2rem;
+              color: #6b7280;
+              cursor: pointer;
+            "
+          >
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="student-profile-card">
+          <div class="student-avatar" id="viewAvatar">KA</div>
+          <div class="student-profile-info">
+            <h4 id="viewName">Kwame Asante</h4>
+            <span class="status-badge confirmed" id="viewStatus">Active</span>
+          </div>
+        </div>
+        <div class="student-detail-grid">
+          <div class="detail-item">
+            <span class="detail-label"
+              ><i class="fas fa-envelope"></i> Email</span
+            >
+            <span class="detail-value" id="viewEmail"
+              >kwame.asante@ug.edu.gh</span
+            >
+          </div>
+          <div class="detail-item">
+            <span class="detail-label"><i class="fas fa-phone"></i> Phone</span>
+            <span class="detail-value" id="viewPhone">024 123 4567</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label"
+              ><i class="fas fa-school"></i> School</span
+            >
+            <span class="detail-value" id="viewSchool">UG, Legon</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label"
+              ><i class="fas fa-bookmark"></i> Bookings</span
+            >
+            <span class="detail-value" id="viewBookings">2</span>
+          </div>
+        </div>
+        <h4
+          style="
+            font-size: 0.9rem;
+            color: #374151;
+            margin: 1.25rem 0 0.75rem;
+            font-weight: 600;
+          "
+        >
+          <i class="fas fa-bed" style="margin-right: 0.4rem; color: #6b7280"></i
+          >Room Assignment
+        </h4>
+        <div id="viewRoomAssignment" class="room-assignment-box">
+          <!-- Filled by JS -->
+        </div>
+        <div class="modal-actions">
+          <button
+            type="button"
+            class="btn btn-outline"
+            onclick="
+              document
+                .getElementById('viewStudentModal')
+                .classList.remove('active')
+            "
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const tableBody = document.getElementById("studentTableBody");
+        const allRows = Array.from(tableBody.querySelectorAll("tr"));
+        const entriesSelect = document.getElementById("entriesCount");
+        const searchInput = document.getElementById("tableSearch");
+        const tableInfo = document.getElementById("tableInfo");
+        const pagination = document.getElementById("tablePagination");
+        const prevBtn = document.getElementById("prevPage");
+        const nextBtn = document.getElementById("nextPage");
+
+        // Room assignments data — maps student name → room info
+        const roomAssignments = {
+          "Kwame Asante": {
+            hostel: "Pentagon Hostel",
+            room: "Room 102",
+            type: "Single (1 in a room)",
+            price: "GH₵ 5,200/yr",
+          },
+          "Ama Mensah": {
+            hostel: "Evandy Hostel",
+            room: "Room 205",
+            type: "Double (2 in a room)",
+            price: "GH₵ 3,200/yr",
+          },
+          "Kofi Adjei": {
+            hostel: "KNUST Hall 7",
+            room: "Room 14",
+            type: "Shared (4 in a room)",
+            price: "GH₵ 600/yr",
+          },
+          "Abena Osei": {
+            hostel: "Pentagon Hostel",
+            room: "Room 108",
+            type: "Double (2 in a room)",
+            price: "GH₵ 3,500/yr",
+          },
+          "Efua Darko": {
+            hostel: "TF Hostel",
+            room: "Room 301",
+            type: "Single (1 in a room)",
+            price: "GH₵ 3,800/yr",
+          },
+          "Mary A. Martin": {
+            hostel: "Evandy Hostel",
+            room: "Room 112",
+            type: "Single (1 in a room)",
+            price: "GH₵ 4,500/yr",
+          },
+          "Richard J. Summers": {
+            hostel: "KNUST Hall 7",
+            room: "Room 22",
+            type: "Double (2 in a room)",
+            price: "GH₵ 1,400/yr",
+          },
+          "Grace M. Owusu": {
+            hostel: "Midway Hostel",
+            room: "Room 203",
+            type: "Double (2 in a room)",
+            price: "GH₵ 2,800/yr",
+          },
+          "Daniel O. Kwarteng": {
+            hostel: "Akuafo Hall Annex",
+            room: "Room 45",
+            type: "Shared (3 in a room)",
+            price: "GH₵ 1,800/yr",
+          },
+          "Sophia A. Chen": {
+            hostel: "Pentagon Hostel",
+            room: "Room 115",
+            type: "Single (1 in a room)",
+            price: "GH₵ 5,200/yr",
+          },
+          "Felicia N. Asare": {
+            hostel: "Midway Hostel",
+            room: "Room 110",
+            type: "Double (2 in a room)",
+            price: "GH₵ 2,800/yr",
+          },
+          "Michael A. Boateng": {
+            hostel: "TF Hostel",
+            room: "Room 205",
+            type: "Single (1 in a room)",
+            price: "GH₵ 3,800/yr",
+          },
+        };
+
+        let currentPage = 1;
+        let perPage = parseInt(entriesSelect.value);
+        let filteredRows = [...allRows];
+
+        function render() {
+          const total = filteredRows.length;
+          const totalPages = Math.ceil(total / perPage);
+          currentPage = Math.min(currentPage, totalPages || 1);
+          const start = (currentPage - 1) * perPage;
+          const end = start + perPage;
+
+          allRows.forEach((r) => (r.style.display = "none"));
+          filteredRows.slice(start, end).forEach((r) => (r.style.display = ""));
+
+          tableInfo.textContent =
+            total === 0
+              ? "No matching entries"
+              : `Showing ${start + 1} to ${Math.min(end, total)} of ${total} entries`;
+
+          pagination.querySelectorAll(".page-num").forEach((b) => b.remove());
+          for (let i = 1; i <= totalPages; i++) {
+            const btn = document.createElement("button");
+            btn.className =
+              "page-btn page-num" + (i === currentPage ? " active" : "");
+            btn.textContent = i;
+            btn.addEventListener("click", () => {
+              currentPage = i;
+              render();
+            });
+            pagination.insertBefore(btn, nextBtn);
+          }
+          prevBtn.disabled = currentPage <= 1;
+          nextBtn.disabled = currentPage >= totalPages;
+        }
+
+        entriesSelect.addEventListener("change", () => {
+          perPage = parseInt(entriesSelect.value);
+          currentPage = 1;
+          render();
+        });
+        searchInput.addEventListener("input", () => {
+          const q = searchInput.value.toLowerCase();
+          filteredRows = allRows.filter((r) =>
+            r.textContent.toLowerCase().includes(q),
+          );
+          currentPage = 1;
+          render();
+        });
+        prevBtn.addEventListener("click", () => {
+          if (currentPage > 1) {
+            currentPage--;
+            render();
+          }
+        });
+        nextBtn.addEventListener("click", () => {
+          currentPage++;
+          render();
+        });
+
+        // Table click handler — View, Deactivate, Activate
+        tableBody.addEventListener("click", (e) => {
+          // VIEW button
+          const viewBtn = e.target.closest(".view-btn");
+          if (viewBtn) {
+            const row = viewBtn.closest("tr");
+            const name = row.children[1].textContent.trim();
+            const email = row.children[2].textContent.trim();
+            const phone = row.children[3].textContent.trim();
+            const school = row.children[4].textContent.trim();
+            const bookings = row.children[5].textContent.trim();
+            const statusBadge = row.children[6].querySelector(".status-badge");
+            const isActive = statusBadge.textContent.trim() === "Active";
+
+            // Avatar initials
+            const parts = name
+              .split(" ")
+              .filter((p) => p.length > 1 && !p.includes("."));
+            const initials =
+              parts.length >= 2
+                ? parts[0][0] + parts[parts.length - 1][0]
+                : name.substring(0, 2);
+
+            document.getElementById("viewAvatar").textContent =
+              initials.toUpperCase();
+            document.getElementById("viewName").textContent = name;
+            const viewStatus = document.getElementById("viewStatus");
+            viewStatus.textContent = isActive ? "Active" : "Inactive";
+            viewStatus.className =
+              "status-badge " + (isActive ? "confirmed" : "pending");
+            document.getElementById("viewEmail").textContent = email;
+            document.getElementById("viewPhone").textContent = phone;
+            document.getElementById("viewSchool").textContent = school;
+            document.getElementById("viewBookings").textContent = bookings;
+
+            // Room assignment
+            const roomBox = document.getElementById("viewRoomAssignment");
+            const assignment = roomAssignments[name];
+            if (assignment) {
+              roomBox.innerHTML = `
+                <div class="room-info-row"><span class="room-info-label">Hostel</span><span>${assignment.hostel}</span></div>
+                <div class="room-info-row"><span class="room-info-label">Room</span><span>${assignment.room}</span></div>
+                <div class="room-info-row"><span class="room-info-label">Type</span><span>${assignment.type}</span></div>
+                <div class="room-info-row"><span class="room-info-label">Price</span><span>${assignment.price}</span></div>
+              `;
+            } else {
+              roomBox.innerHTML =
+                '<p style="color:#9ca3af;font-size:0.85rem;margin:0">No room assigned yet.</p>';
+            }
+
+            document.getElementById("viewStudentModal").classList.add("active");
+            return;
+          }
+
+          // DEACTIVATE / ACTIVATE button
+          const actionBtn = e.target.closest(".delete-btn");
+          if (actionBtn) {
+            const row = actionBtn.closest("tr");
+            const name = row.children[1].textContent.trim();
+            const statusEl = row.children[6].querySelector(".status-badge");
+            const isActive = statusEl.textContent.trim() === "Active";
+
+            if (isActive) {
+              if (confirm(`Deactivate student "${name}"?`)) {
+                statusEl.textContent = "Inactive";
+                statusEl.className = "status-badge pending";
+                actionBtn.title = "Activate";
+                actionBtn.style.background = "#d1fae5";
+                actionBtn.style.color = "#059669";
+                actionBtn.innerHTML = '<i class="fas fa-check"></i>';
+              }
+            } else {
+              if (confirm(`Activate student "${name}"?`)) {
+                statusEl.textContent = "Active";
+                statusEl.className = "status-badge confirmed";
+                actionBtn.title = "Deactivate";
+                actionBtn.style.background = "";
+                actionBtn.style.color = "";
+                actionBtn.innerHTML = '<i class="fas fa-times-circle"></i>';
+              }
+            }
+          }
+        });
+
+        // Sorting
+        document
+          .querySelectorAll(".data-table thead th")
+          .forEach((th, colIdx) => {
+            if (!th.querySelector("i")) return;
+            let asc = true;
+            th.style.cursor = "pointer";
+            th.addEventListener("click", () => {
+              filteredRows.sort((a, b) => {
+                const aV = a.children[colIdx].textContent.trim();
+                const bV = b.children[colIdx].textContent.trim();
+                const aN = parseFloat(aV),
+                  bN = parseFloat(bV);
+                if (!isNaN(aN) && !isNaN(bN)) return asc ? aN - bN : bN - aN;
+                return asc ? aV.localeCompare(bV) : bV.localeCompare(aV);
+              });
+              asc = !asc;
+              currentPage = 1;
+              render();
+            });
+          });
+
+        // Add Student modal
+        document
+          .getElementById("addStudentBtn")
+          .addEventListener("click", () => {
+            document.getElementById("studentModal").classList.add("active");
+          });
+        document
+          .getElementById("studentForm")
+          .addEventListener("submit", (e) => {
+            e.preventDefault();
+            document.getElementById("studentModal").classList.remove("active");
+          });
+
+        render();
+      });
+    </script>
+    <script>
+      const sidebarToggle = document.getElementById("sidebarToggle");
+      const adminSidebar = document.querySelector(".admin-sidebar");
+      const sidebarOverlay = document.getElementById("sidebarOverlay");
+      function toggleSidebar() {
+        const isOpen = adminSidebar.classList.toggle("open");
+        sidebarOverlay.classList.toggle("open");
+        sidebarToggle.querySelector("i").className = isOpen
+          ? "fas fa-times"
+          : "fas fa-bars";
+      }
+      function closeSidebar() {
+        adminSidebar.classList.remove("open");
+        sidebarOverlay.classList.remove("open");
+        sidebarToggle.querySelector("i").className = "fas fa-bars";
+      }
+      sidebarToggle.addEventListener("click", toggleSidebar);
+      sidebarOverlay.addEventListener("click", closeSidebar);
+    </script>
+  </body>
+</html>

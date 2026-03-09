@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bookings - Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../client/css/style.css" />
+    <link rel="stylesheet" href="css/admin.css" />
+  </head>
+  <body>
+    <div class="admin-layout">
+      <!-- Mobile Hamburger -->
+      <button class="sidebar-toggle" id="sidebarToggle">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+      <!-- Sidebar -->
+      <aside class="admin-sidebar">
+        <a href="index.html" class="sidebar-link">
+          <i class="fas fa-home"></i> Dashboard
+        </a>
+
+        <div class="sidebar-label">Features</div>
+        <a href="students.html" class="sidebar-link">
+          <i class="fas fa-user-plus"></i> Register Student
+        </a>
+        <a href="students.html" class="sidebar-link">
+          <i class="fas fa-id-card"></i> View Student Acc.
+        </a>
+        <a href="bookings.html" class="sidebar-link active">
+          <i class="fas fa-bookmark"></i> Book Hostel
+        </a>
+        <a href="hostels.html" class="sidebar-link">
+          <i class="fas fa-door-open"></i> Manage Rooms
+        </a>
+
+        <div class="sidebar-label">Settings</div>
+        <a href="settings.html" class="sidebar-link">
+          <i class="fas fa-cog"></i> Settings
+        </a>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="admin-main">
+        <div class="admin-greeting">
+          <h1>Hostel Bookings</h1>
+        </div>
+
+        <!-- Stat Cards -->
+        <div class="admin-stats">
+          <div class="stat-card">
+            <div class="stat-card-left">
+              <div class="stat-card-value">12</div>
+              <div class="stat-card-label">Total Bookings</div>
+            </div>
+            <div class="stat-icon purple">
+              <i class="fas fa-calendar-alt"></i>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-left">
+              <div class="stat-card-value">9</div>
+              <div class="stat-card-label">Confirmed</div>
+            </div>
+            <div class="stat-icon blue">
+              <i class="fas fa-check-circle"></i>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-left">
+              <div class="stat-card-value">2</div>
+              <div class="stat-card-label">Pending</div>
+            </div>
+            <div class="stat-icon teal"><i class="fas fa-clock"></i></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-left">
+              <div class="stat-card-value">1</div>
+              <div class="stat-card-label">Cancelled</div>
+            </div>
+            <div class="stat-icon indigo">
+              <i class="fas fa-times-circle"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bookings Table -->
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3>Booking Records</h3>
+          </div>
+          <p class="table-desc">Displaying all hostel booking records.</p>
+
+          <div class="table-controls">
+            <div class="table-show">
+              Show
+              <select id="entriesCount">
+                <option value="5">5</option>
+                <option value="10" selected>10</option>
+                <option value="25">25</option>
+              </select>
+              entries
+            </div>
+            <div class="table-search">
+              Search: <input type="text" id="tableSearch" />
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="admin-table data-table" id="bookingTable">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Reference <i class="fas fa-sort"></i></th>
+                  <th>Student <i class="fas fa-sort"></i></th>
+                  <th>Hostel <i class="fas fa-sort"></i></th>
+                  <th>Room Type <i class="fas fa-sort"></i></th>
+                  <th>Move-in <i class="fas fa-sort"></i></th>
+                  <th>Status <i class="fas fa-sort"></i></th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="bookingTableBody">
+                <tr>
+                  <td>1</td>
+                  <td style="font-family: monospace; color: #6366f1">
+                    AH-M3KJ7-XN2P
+                  </td>
+                  <td>Kwame Asante</td>
+                  <td>Pentagon Hostel</td>
+                  <td>Shared (2 in a room)</td>
+                  <td>2026-09-01</td>
+                  <td><span class="status-badge confirmed">Confirmed</span></td>
+                  <td class="actions-cell">
+                    <button class="action-btn view-btn" title="View">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                    </button>
+                    <button class="action-btn delete-btn" title="Cancel">
+                      <i class="fas fa-times-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td style="font-family: monospace; color: #6366f1">
+                    AH-P8R2M-YK4Q
+                  </td>
+                  <td>Ama Mensah</td>
+                  <td>Evandy Hostel</td>
+                  <td>Standard Room</td>
+                  <td>2026-09-01</td>
+                  <td><span class="status-badge confirmed">Confirmed</span></td>
+                  <td class="actions-cell">
+                    <button class="action-btn view-btn" title="View">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                    </button>
+                    <button class="action-btn delete-btn" title="Cancel">
+                      <i class="fas fa-times-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td style="font-family: monospace; color: #6366f1">
+                    AH-N5TW9-LP3R
+                  </td>
+                  <td>Kofi Adjei</td>
+                  <td>Akuafo Hall Annex</td>
+                  <td>Premium Single</td>
+                  <td>2026-09-01</td>
+                  <td><span class="status-badge pending">Pending</span></td>
+                  <td class="actions-cell">
+                    <button
+                      class="action-btn view-btn"
+                      title="Approve"
+                      style="background: #d1fae5; color: #059669"
+                    >
+                      <i class="fas fa-check"></i>
+                    </button>
+                    <button class="action-btn delete-btn" title="Reject">
+                      <i class="fas fa-times-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td style="font-family: monospace; color: #6366f1">
+                    AH-Q2VB1-MJ8K
+                  </td>
+                  <td>Abena Osei</td>
+                  <td>Midway Hostel</td>
+                  <td>Shared (2 in a room)</td>
+                  <td>2026-09-01</td>
+                  <td><span class="status-badge confirmed">Confirmed</span></td>
+                  <td class="actions-cell">
+                    <button class="action-btn view-btn" title="View">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                    </button>
+                    <button class="action-btn delete-btn" title="Cancel">
+                      <i class="fas fa-times-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td style="font-family: monospace; color: #6366f1">
+                    AH-W7NM4-DR5T
+                  </td>
+                  <td>Yaw Boateng</td>
+                  <td>TF Hostel</td>
+                  <td>Shared (3 in a room)</td>
+                  <td>2026-09-01</td>
+                  <td><span class="status-badge cancelled">Cancelled</span></td>
+                  <td class="actions-cell">
+                    <button class="action-btn view-btn" title="View">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>6</td>
+                  <td style="font-family: monospace; color: #6366f1">
+                    AH-T1YP6-BW9M
+                  </td>
+                  <td>Efua Darko</td>
+                  <td>Pentagon Hostel</td>
+                  <td>Single Room</td>
+                  <td>2026-09-01</td>
+                  <td><span class="status-badge confirmed">Confirmed</span></td>
+                  <td class="actions-cell">
+                    <button class="action-btn view-btn" title="View">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                    </button>
+                    <button class="action-btn delete-btn" title="Cancel">
+                      <i class="fas fa-times-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>7</td>
+                  <td style="font-family: monospace; color: #6366f1">
+                    AH-K4RM8-VZ1N
+                  </td>
+                  <td>Grace M. Owusu</td>
+                  <td>Evandy Hostel</td>
+                  <td>Shared (2 in a room)</td>
+                  <td>2026-09-15</td>
+                  <td><span class="status-badge confirmed">Confirmed</span></td>
+                  <td class="actions-cell">
+                    <button class="action-btn view-btn" title="View">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                    </button>
+                    <button class="action-btn delete-btn" title="Cancel">
+                      <i class="fas fa-times-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>8</td>
+                  <td style="font-family: monospace; color: #6366f1">
+                    AH-J9PL3-HQ7W
+                  </td>
+                  <td>Daniel O. Kwarteng</td>
+                  <td>KNUST Hall 7</td>
+                  <td>4 in a room</td>
+                  <td>2026-09-01</td>
+                  <td><span class="status-badge confirmed">Confirmed</span></td>
+                  <td class="actions-cell">
+                    <button class="action-btn view-btn" title="View">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                    </button>
+                    <button class="action-btn delete-btn" title="Cancel">
+                      <i class="fas fa-times-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>9</td>
+                  <td style="font-family: monospace; color: #6366f1">
+                    AH-R6XT2-WM5B
+                  </td>
+                  <td>Sophia A. Chen</td>
+                  <td>TF Hostel</td>
+                  <td>Standard Room</td>
+                  <td>2026-10-01</td>
+                  <td><span class="status-badge confirmed">Confirmed</span></td>
+                  <td class="actions-cell">
+                    <button class="action-btn view-btn" title="View">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                    </button>
+                    <button class="action-btn delete-btn" title="Cancel">
+                      <i class="fas fa-times-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>10</td>
+                  <td style="font-family: monospace; color: #6366f1">
+                    AH-B2NC9-FT4L
+                  </td>
+                  <td>Isaac B. Tetteh</td>
+                  <td>Akuafo Hall Annex</td>
+                  <td>Shared (2 in a room)</td>
+                  <td>2026-09-01</td>
+                  <td><span class="status-badge pending">Pending</span></td>
+                  <td class="actions-cell">
+                    <button
+                      class="action-btn view-btn"
+                      title="Approve"
+                      style="background: #d1fae5; color: #059669"
+                    >
+                      <i class="fas fa-check"></i>
+                    </button>
+                    <button class="action-btn delete-btn" title="Reject">
+                      <i class="fas fa-times-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>11</td>
+                  <td style="font-family: monospace; color: #6366f1">
+                    AH-V5HG1-KR8J
+                  </td>
+                  <td>Felicia N. Asare</td>
+                  <td>Midway Hostel</td>
+                  <td>Single Room</td>
+                  <td>2026-10-15</td>
+                  <td><span class="status-badge confirmed">Confirmed</span></td>
+                  <td class="actions-cell">
+                    <button class="action-btn view-btn" title="View">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                    </button>
+                    <button class="action-btn delete-btn" title="Cancel">
+                      <i class="fas fa-times-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>12</td>
+                  <td style="font-family: monospace; color: #6366f1">
+                    AH-U8QZ6-NY3P
+                  </td>
+                  <td>Michael A. Boateng</td>
+                  <td>Pentagon Hostel</td>
+                  <td>Shared (3 in a room)</td>
+                  <td>2026-09-01</td>
+                  <td><span class="status-badge confirmed">Confirmed</span></td>
+                  <td class="actions-cell">
+                    <button class="action-btn view-btn" title="View">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                    </button>
+                    <button class="action-btn delete-btn" title="Cancel">
+                      <i class="fas fa-times-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="table-footer">
+            <div class="table-info" id="tableInfo">
+              Showing 1 to 10 of 12 entries
+            </div>
+            <div class="table-pagination" id="tablePagination">
+              <button class="page-btn" id="prevPage" disabled>Previous</button>
+              <button class="page-btn page-num active">1</button>
+              <button class="page-btn page-num">2</button>
+              <button class="page-btn" id="nextPage">Next</button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const tableBody = document.getElementById("bookingTableBody");
+        const allRows = Array.from(tableBody.querySelectorAll("tr"));
+        const entriesSelect = document.getElementById("entriesCount");
+        const searchInput = document.getElementById("tableSearch");
+        const tableInfo = document.getElementById("tableInfo");
+        const pagination = document.getElementById("tablePagination");
+        const prevBtn = document.getElementById("prevPage");
+        const nextBtn = document.getElementById("nextPage");
+
+        let currentPage = 1;
+        let perPage = parseInt(entriesSelect.value);
+        let filteredRows = [...allRows];
+
+        function render() {
+          const total = filteredRows.length;
+          const totalPages = Math.ceil(total / perPage);
+          currentPage = Math.min(currentPage, totalPages || 1);
+          const start = (currentPage - 1) * perPage;
+          const end = start + perPage;
+
+          allRows.forEach((r) => (r.style.display = "none"));
+          filteredRows.slice(start, end).forEach((r) => (r.style.display = ""));
+
+          tableInfo.textContent =
+            total === 0
+              ? "No matching entries"
+              : `Showing ${start + 1} to ${Math.min(end, total)} of ${total} entries`;
+
+          pagination.querySelectorAll(".page-num").forEach((b) => b.remove());
+          for (let i = 1; i <= totalPages; i++) {
+            const btn = document.createElement("button");
+            btn.className =
+              "page-btn page-num" + (i === currentPage ? " active" : "");
+            btn.textContent = i;
+            btn.addEventListener("click", () => {
+              currentPage = i;
+              render();
+            });
+            pagination.insertBefore(btn, nextBtn);
+          }
+          prevBtn.disabled = currentPage <= 1;
+          nextBtn.disabled = currentPage >= totalPages;
+        }
+
+        entriesSelect.addEventListener("change", () => {
+          perPage = parseInt(entriesSelect.value);
+          currentPage = 1;
+          render();
+        });
+        searchInput.addEventListener("input", () => {
+          const q = searchInput.value.toLowerCase();
+          filteredRows = allRows.filter((r) =>
+            r.textContent.toLowerCase().includes(q),
+          );
+          currentPage = 1;
+          render();
+        });
+        prevBtn.addEventListener("click", () => {
+          if (currentPage > 1) {
+            currentPage--;
+            render();
+          }
+        });
+        nextBtn.addEventListener("click", () => {
+          currentPage++;
+          render();
+        });
+
+        // Cancel / Delete
+        tableBody.addEventListener("click", (e) => {
+          const delBtn = e.target.closest(".delete-btn");
+          if (delBtn) {
+            const row = delBtn.closest("tr");
+            const ref = row.children[1].textContent;
+            if (confirm(`Cancel booking "${ref}"?`)) {
+              const statusCell = row.children[6];
+              statusCell.innerHTML =
+                '<span class="status-badge cancelled">Cancelled</span>';
+              delBtn.remove();
+            }
+          }
+          // Approve
+          const approveBtn = e.target.closest(".view-btn[title='Approve']");
+          if (approveBtn) {
+            const row = approveBtn.closest("tr");
+            const statusCell = row.children[6];
+            statusCell.innerHTML =
+              '<span class="status-badge confirmed">Confirmed</span>';
+            approveBtn.title = "View";
+            approveBtn.style.background = "#dbeafe";
+            approveBtn.style.color = "#2563eb";
+            approveBtn.innerHTML = '<i class="fas fa-expand-arrows-alt"></i>';
+          }
+        });
+
+        // Sorting
+        document
+          .querySelectorAll(".data-table thead th")
+          .forEach((th, colIdx) => {
+            if (!th.querySelector("i")) return;
+            let asc = true;
+            th.style.cursor = "pointer";
+            th.addEventListener("click", () => {
+              filteredRows.sort((a, b) => {
+                const aV = a.children[colIdx].textContent.trim();
+                const bV = b.children[colIdx].textContent.trim();
+                const aN = parseFloat(aV),
+                  bN = parseFloat(bV);
+                if (!isNaN(aN) && !isNaN(bN)) return asc ? aN - bN : bN - aN;
+                return asc ? aV.localeCompare(bV) : bV.localeCompare(aV);
+              });
+              asc = !asc;
+              currentPage = 1;
+              render();
+            });
+          });
+
+        render();
+      });
+    </script>
+    <script>
+      const sidebarToggle = document.getElementById("sidebarToggle");
+      const adminSidebar = document.querySelector(".admin-sidebar");
+      const sidebarOverlay = document.getElementById("sidebarOverlay");
+      function toggleSidebar() {
+        const isOpen = adminSidebar.classList.toggle("open");
+        sidebarOverlay.classList.toggle("open");
+        sidebarToggle.querySelector("i").className = isOpen
+          ? "fas fa-times"
+          : "fas fa-bars";
+      }
+      function closeSidebar() {
+        adminSidebar.classList.remove("open");
+        sidebarOverlay.classList.remove("open");
+        sidebarToggle.querySelector("i").className = "fas fa-bars";
+      }
+      sidebarToggle.addEventListener("click", toggleSidebar);
+      sidebarOverlay.addEventListener("click", closeSidebar);
+    </script>
+  </body>
+</html>

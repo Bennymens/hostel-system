@@ -1,0 +1,384 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manage Rooms - Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="../client/css/style.css" />
+    <link rel="stylesheet" href="css/admin.css" />
+  </head>
+  <body>
+    <div class="admin-layout">
+      <!-- Mobile Hamburger -->
+      <button class="sidebar-toggle" id="sidebarToggle">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+      <!-- Sidebar -->
+      <aside class="admin-sidebar">
+        <a href="index.html" class="sidebar-link">
+          <i class="fas fa-home"></i> Dashboard
+        </a>
+        <div class="sidebar-label">Features</div>
+        <a href="students.html" class="sidebar-link">
+          <i class="fas fa-user-plus"></i> Register Student
+        </a>
+        <a href="students.html" class="sidebar-link">
+          <i class="fas fa-id-card"></i> View Student Acc.
+        </a>
+        <a href="bookings.html" class="sidebar-link">
+          <i class="fas fa-bookmark"></i> Book Hostel
+        </a>
+        <a href="hostels.html" class="sidebar-link active">
+          <i class="fas fa-door-open"></i> Manage Rooms
+        </a>
+        <div class="sidebar-label">Settings</div>
+        <a href="settings.html" class="sidebar-link">
+          <i class="fas fa-cog"></i> Settings
+        </a>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="admin-main">
+        <!-- Breadcrumb -->
+        <div class="drill-breadcrumb" id="breadcrumb">
+          <span class="bc-item active" data-level="hostels"><i class="fas fa-building"></i> All Hostels</span>
+        </div>
+
+        <!-- Stat Cards -->
+        <div class="admin-stats">
+          <div class="stat-card">
+            <div class="stat-card-left">
+              <div class="stat-card-value" id="statTotal">6</div>
+              <div class="stat-card-label">Total Hostels</div>
+            </div>
+            <div class="stat-icon purple"><i class="fas fa-building"></i></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-left">
+              <div class="stat-card-value" id="statRooms">42</div>
+              <div class="stat-card-label">Total Rooms</div>
+            </div>
+            <div class="stat-icon blue"><i class="fas fa-th-large"></i></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-left">
+              <div class="stat-card-value" id="statAvailable">24</div>
+              <div class="stat-card-label">Available</div>
+            </div>
+            <div class="stat-icon teal"><i class="fas fa-check-circle"></i></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-left">
+              <div class="stat-card-value">GH 892K</div>
+              <div class="stat-card-label">Revenue</div>
+            </div>
+            <div class="stat-icon indigo"><i class="fas fa-wallet"></i></div>
+          </div>
+        </div>
+
+        <!-- Drill-down Container -->
+        <div class="admin-card" id="drillContainer">
+          <div class="admin-card-header" id="drillHeader">
+            <h3 id="drillTitle">Select a Hostel</h3>
+          </div>
+          <div id="drillContent" class="drill-content"></div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Room Detail Modal -->
+    <div class="admin-modal-overlay" id="roomDetailModal">
+      <div class="admin-modal" style="max-width:560px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;padding-bottom:0.75rem;border-bottom:1px solid #f3f4f6">
+          <h3 style="margin:0;padding:0;border:none" id="roomDetailTitle">Room</h3>
+          <button onclick="document.getElementById('roomDetailModal').classList.remove('active')" style="background:none;border:none;font-size:1.2rem;color:#6b7280;cursor:pointer"><i class="fas fa-times"></i></button>
+        </div>
+        <div id="roomDetailBody"></div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-outline" onclick="document.getElementById('roomDetailModal').classList.remove('active')">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const hostelsData = {
+        "Pentagon Hostel": {
+          school: "University of Ghana, Legon",
+          blocks: {
+            "Block A": [
+              { room: "A101", type: "Single (1 in a room)", capacity: 1, price: "GH\u20B5 5,200/yr", students: [{ name: "Kwame Asante", phone: "024 123 4567", email: "kwame.asante@ug.edu.gh" }] },
+              { room: "A102", type: "Single (1 in a room)", capacity: 1, price: "GH\u20B5 5,200/yr", students: [{ name: "Sophia A. Chen", phone: "024 456 7890", email: "sophia.chen@ug.edu.gh" }] },
+              { room: "A103", type: "Double (2 in a room)", capacity: 2, price: "GH\u20B5 3,500/yr", students: [{ name: "Abena Osei", phone: "024 456 7890", email: "abena.osei@ug.edu.gh" }] },
+              { room: "A104", type: "Single (1 in a room)", capacity: 1, price: "GH\u20B5 5,200/yr", students: [] }
+            ],
+            "Block B": [
+              { room: "B201", type: "Double (2 in a room)", capacity: 2, price: "GH\u20B5 3,500/yr", students: [{ name: "Grace M. Owusu", phone: "024 345 6789", email: "grace.owusu@ug.edu.gh" }, { name: "Felicia N. Asare", phone: "024 890 1234", email: "felicia.asare@ug.edu.gh" }] },
+              { room: "B202", type: "Double (2 in a room)", capacity: 2, price: "GH\u20B5 3,500/yr", students: [] },
+              { room: "B203", type: "Single (1 in a room)", capacity: 1, price: "GH\u20B5 5,200/yr", students: [] }
+            ],
+            "Block C": [
+              { room: "C301", type: "Shared (3 in a room)", capacity: 3, price: "GH\u20B5 1,200/yr", students: [{ name: "Daniel O. Kwarteng", phone: "020 789 1234", email: "daniel.kwarteng@knust.edu.gh" }] },
+              { room: "C302", type: "Shared (3 in a room)", capacity: 3, price: "GH\u20B5 1,200/yr", students: [] }
+            ]
+          }
+        },
+        "Evandy Hostel": {
+          school: "University of Ghana, Legon",
+          blocks: {
+            "Block A": [
+              { room: "A101", type: "Single (1 in a room)", capacity: 1, price: "GH\u20B5 4,500/yr", students: [{ name: "Mary A. Martin", phone: "024 555 8855", email: "mary.martin@ug.edu.gh" }] },
+              { room: "A102", type: "Single (1 in a room)", capacity: 1, price: "GH\u20B5 4,500/yr", students: [] },
+              { room: "A103", type: "Double (2 in a room)", capacity: 2, price: "GH\u20B5 3,200/yr", students: [{ name: "Ama Mensah", phone: "024 234 5678", email: "ama.mensah@ug.edu.gh" }] }
+            ],
+            "Block B": [
+              { room: "B201", type: "Double (2 in a room)", capacity: 2, price: "GH\u20B5 3,200/yr", students: [] },
+              { room: "B202", type: "Single (1 in a room)", capacity: 1, price: "GH\u20B5 4,500/yr", students: [] },
+              { room: "B203", type: "Shared (3 in a room)", capacity: 3, price: "GH\u20B5 1,800/yr", students: [] }
+            ]
+          }
+        },
+        "Akuafo Hall Annex": {
+          school: "University of Ghana, Legon",
+          blocks: {
+            "Block A": [
+              { room: "A1", type: "Shared (4 in a room)", capacity: 4, price: "GH\u20B5 800/yr", students: [{ name: "Isaac B. Tetteh", phone: "020 123 4567", email: "isaac.tetteh@ucc.edu.gh" }] },
+              { room: "A2", type: "Shared (4 in a room)", capacity: 4, price: "GH\u20B5 800/yr", students: [] },
+              { room: "A3", type: "Shared (3 in a room)", capacity: 3, price: "GH\u20B5 1,200/yr", students: [] }
+            ],
+            "Block B": [
+              { room: "B1", type: "Double (2 in a room)", capacity: 2, price: "GH\u20B5 2,800/yr", students: [] },
+              { room: "B2", type: "Double (2 in a room)", capacity: 2, price: "GH\u20B5 2,800/yr", students: [] }
+            ]
+          }
+        },
+        "TF Hostel": {
+          school: "University of Ghana, Legon",
+          blocks: {
+            "Block A": [
+              { room: "A101", type: "Single (1 in a room)", capacity: 1, price: "GH\u20B5 3,800/yr", students: [{ name: "Michael A. Boateng", phone: "054 567 8901", email: "michael.boateng@ashesi.edu.gh" }] },
+              { room: "A102", type: "Single (1 in a room)", capacity: 1, price: "GH\u20B5 3,800/yr", students: [{ name: "Efua Darko", phone: "054 678 9012", email: "efua.darko@ashesi.edu.gh" }] },
+              { room: "A103", type: "Double (2 in a room)", capacity: 2, price: "GH\u20B5 2,500/yr", students: [] }
+            ],
+            "Block B": [
+              { room: "B201", type: "Double (2 in a room)", capacity: 2, price: "GH\u20B5 2,500/yr", students: [] },
+              { room: "B202", type: "Shared (3 in a room)", capacity: 3, price: "GH\u20B5 1,000/yr", students: [] }
+            ]
+          }
+        },
+        "Midway Hostel": {
+          school: "University of Ghana, Legon",
+          blocks: {
+            "Block A": [
+              { room: "A101", type: "Double (2 in a room)", capacity: 2, price: "GH\u20B5 2,800/yr", students: [{ name: "Felicia N. Asare", phone: "024 890 1234", email: "felicia.asare@ug.edu.gh" }] },
+              { room: "A102", type: "Double (2 in a room)", capacity: 2, price: "GH\u20B5 2,800/yr", students: [{ name: "Grace M. Owusu", phone: "024 345 6789", email: "grace.owusu@ug.edu.gh" }] }
+            ],
+            "Block B": [
+              { room: "B201", type: "Single (1 in a room)", capacity: 1, price: "GH\u20B5 4,000/yr", students: [] },
+              { room: "B202", type: "Single (1 in a room)", capacity: 1, price: "GH\u20B5 4,000/yr", students: [] },
+              { room: "B203", type: "Shared (3 in a room)", capacity: 3, price: "GH\u20B5 1,500/yr", students: [] }
+            ]
+          }
+        },
+        "KNUST Hall 7": {
+          school: "KNUST, Kumasi",
+          blocks: {
+            "Block A": [
+              { room: "A14", type: "Shared (4 in a room)", capacity: 4, price: "GH\u20B5 600/yr", students: [{ name: "Kofi Adjei", phone: "020 345 6789", email: "kofi.adjei@knust.edu.gh" }] },
+              { room: "A15", type: "Shared (4 in a room)", capacity: 4, price: "GH\u20B5 600/yr", students: [] }
+            ],
+            "Block B": [
+              { room: "B22", type: "Double (2 in a room)", capacity: 2, price: "GH\u20B5 1,400/yr", students: [{ name: "Richard J. Summers", phone: "020 565 8800", email: "richard.summers@knust.edu.gh" }] },
+              { room: "B23", type: "Double (2 in a room)", capacity: 2, price: "GH\u20B5 1,400/yr", students: [] },
+              { room: "B24", type: "Shared (4 in a room)", capacity: 4, price: "GH\u20B5 600/yr", students: [] }
+            ],
+            "Block C": [
+              { room: "C31", type: "Double (2 in a room)", capacity: 2, price: "GH\u20B5 2,200/yr", students: [] },
+              { room: "C32", type: "Double (2 in a room)", capacity: 2, price: "GH\u20B5 2,200/yr", students: [] }
+            ]
+          }
+        }
+      };
+
+      const drillContent = document.getElementById("drillContent");
+      const drillTitle = document.getElementById("drillTitle");
+      const breadcrumb = document.getElementById("breadcrumb");
+      let currentHostel = null;
+      let currentBlock = null;
+
+      function renderHostels() {
+        currentHostel = null;
+        currentBlock = null;
+        drillTitle.textContent = "Select a Hostel";
+        updateBreadcrumb();
+        let html = '<div class="drill-grid">';
+        Object.keys(hostelsData).forEach(name => {
+          const h = hostelsData[name];
+          const blockCount = Object.keys(h.blocks).length;
+          let totalRooms = 0, occupied = 0;
+          Object.values(h.blocks).forEach(rooms => {
+            totalRooms += rooms.length;
+            rooms.forEach(r => { if (r.students.length > 0) occupied++; });
+          });
+          html += '<div class="drill-card hostel-card" data-hostel="' + name + '">' +
+            '<div class="drill-card-icon"><i class="fas fa-building"></i></div>' +
+            '<div class="drill-card-info">' +
+              '<h4>' + name + '</h4>' +
+              '<span class="drill-card-sub">' + h.school + '</span>' +
+              '<div class="drill-card-meta">' +
+                '<span><i class="fas fa-layer-group"></i> ' + blockCount + ' Blocks</span>' +
+                '<span><i class="fas fa-door-open"></i> ' + totalRooms + ' Rooms</span>' +
+                '<span><i class="fas fa-user"></i> ' + occupied + ' Occupied</span>' +
+              '</div>' +
+            '</div>' +
+            '<i class="fas fa-chevron-right drill-card-arrow"></i>' +
+          '</div>';
+        });
+        html += '</div>';
+        drillContent.innerHTML = html;
+      }
+
+      function renderBlocks(hostelName) {
+        currentHostel = hostelName;
+        currentBlock = null;
+        const h = hostelsData[hostelName];
+        drillTitle.textContent = hostelName + " \u2014 Blocks";
+        updateBreadcrumb();
+        let html = '<div class="drill-grid">';
+        Object.keys(h.blocks).forEach(blockName => {
+          const rooms = h.blocks[blockName];
+          const occupied = rooms.filter(r => r.students.length > 0).length;
+          const available = rooms.length - occupied;
+          html += '<div class="drill-card block-card" data-block="' + blockName + '">' +
+            '<div class="drill-card-icon block-icon"><i class="fas fa-th-large"></i></div>' +
+            '<div class="drill-card-info">' +
+              '<h4>' + blockName + '</h4>' +
+              '<div class="drill-card-meta">' +
+                '<span><i class="fas fa-door-open"></i> ' + rooms.length + ' Rooms</span>' +
+                '<span class="meta-occupied"><i class="fas fa-user"></i> ' + occupied + ' Occupied</span>' +
+                '<span class="meta-available"><i class="fas fa-check-circle"></i> ' + available + ' Available</span>' +
+              '</div>' +
+            '</div>' +
+            '<i class="fas fa-chevron-right drill-card-arrow"></i>' +
+          '</div>';
+        });
+        html += '</div>';
+        drillContent.innerHTML = html;
+      }
+
+      function renderRooms(hostelName, blockName) {
+        currentHostel = hostelName;
+        currentBlock = blockName;
+        const rooms = hostelsData[hostelName].blocks[blockName];
+        drillTitle.textContent = hostelName + " \u2014 " + blockName;
+        updateBreadcrumb();
+        let html = '<div class="rooms-grid">';
+        rooms.forEach(r => {
+          const occ = r.students.length > 0;
+          const occupancy = r.students.length + " / " + r.capacity;
+          html += '<div class="room-tile ' + (occ ? 'occupied' : 'available') + '" data-room="' + r.room + '">' +
+            '<div class="room-tile-top">' +
+              '<span class="room-tile-name">' + r.room + '</span>' +
+              '<span class="status-badge ' + (occ ? 'confirmed' : 'pending') + '">' + (occ ? 'Occupied' : 'Available') + '</span>' +
+            '</div>' +
+            '<div class="room-tile-type">' + r.type + '</div>' +
+            '<div class="room-tile-bottom">' +
+              '<span class="room-tile-price">' + r.price + '</span>' +
+              '<span class="room-tile-occupancy"><i class="fas fa-users"></i> ' + occupancy + '</span>' +
+            '</div>' +
+          '</div>';
+        });
+        html += '</div>';
+        drillContent.innerHTML = html;
+      }
+
+      function openRoomModal(hostelName, blockName, roomId) {
+        const rooms = hostelsData[hostelName].blocks[blockName];
+        const room = rooms.find(r => r.room === roomId);
+        if (!room) return;
+        document.getElementById("roomDetailTitle").textContent = hostelName + " \u2014 " + blockName + " \u2014 Room " + room.room;
+        const body = document.getElementById("roomDetailBody");
+        const occupancy = room.students.length + " / " + room.capacity;
+        let html = '<div class="room-modal-info">' +
+          '<div class="detail-item"><span class="detail-label"><i class="fas fa-door-open"></i> Room</span><span class="detail-value">' + room.room + '</span></div>' +
+          '<div class="detail-item"><span class="detail-label"><i class="fas fa-bed"></i> Type</span><span class="detail-value">' + room.type + '</span></div>' +
+          '<div class="detail-item"><span class="detail-label"><i class="fas fa-users"></i> Occupancy</span><span class="detail-value">' + occupancy + '</span></div>' +
+          '<div class="detail-item"><span class="detail-label"><i class="fas fa-tag"></i> Price</span><span class="detail-value">' + room.price + '</span></div>' +
+        '</div>';
+        if (room.students.length > 0) {
+          html += '<h4 style="font-size:0.9rem;color:#374151;margin:1.25rem 0 0.75rem;font-weight:600"><i class="fas fa-user-friends" style="margin-right:0.4rem;color:#6b7280"></i>Students in this Room</h4>';
+          room.students.forEach(s => {
+            const initials = s.name.split(" ").filter(p => p.length > 1 && !p.includes(".")).map(p => p[0]).join("").substring(0,2).toUpperCase();
+            html += '<div class="room-student-card">' +
+              '<div class="student-avatar" style="width:40px;height:40px;font-size:0.85rem">' + initials + '</div>' +
+              '<div class="room-student-info">' +
+                '<strong>' + s.name + '</strong>' +
+                '<span><i class="fas fa-phone"></i> ' + s.phone + '</span>' +
+                '<span><i class="fas fa-envelope"></i> ' + s.email + '</span>' +
+              '</div>' +
+            '</div>';
+          });
+        } else {
+          html += '<div style="padding:1rem;text-align:center;color:#9ca3af;font-size:0.88rem"><i class="fas fa-info-circle" style="margin-right:0.35rem"></i>No students assigned to this room yet.</div>';
+        }
+        body.innerHTML = html;
+        document.getElementById("roomDetailModal").classList.add("active");
+      }
+
+      function updateBreadcrumb() {
+        let html = '<span class="bc-item ' + (!currentHostel ? 'active' : 'clickable') + '" data-level="hostels"><i class="fas fa-building"></i> All Hostels</span>';
+        if (currentHostel) {
+          html += '<i class="fas fa-chevron-right bc-sep"></i>';
+          html += '<span class="bc-item ' + (!currentBlock ? 'active' : 'clickable') + '" data-level="blocks">' + currentHostel + '</span>';
+        }
+        if (currentBlock) {
+          html += '<i class="fas fa-chevron-right bc-sep"></i>';
+          html += '<span class="bc-item active" data-level="rooms">' + currentBlock + '</span>';
+        }
+        breadcrumb.innerHTML = html;
+      }
+
+      drillContent.addEventListener("click", (e) => {
+        const hostelCard = e.target.closest(".hostel-card");
+        if (hostelCard) { renderBlocks(hostelCard.dataset.hostel); return; }
+        const blockCard = e.target.closest(".block-card");
+        if (blockCard) { renderRooms(currentHostel, blockCard.dataset.block); return; }
+        const roomTile = e.target.closest(".room-tile");
+        if (roomTile) { openRoomModal(currentHostel, currentBlock, roomTile.dataset.room); }
+      });
+
+      breadcrumb.addEventListener("click", (e) => {
+        const item = e.target.closest(".bc-item.clickable");
+        if (!item) return;
+        const level = item.dataset.level;
+        if (level === "hostels") renderHostels();
+        else if (level === "blocks") renderBlocks(currentHostel);
+      });
+
+      renderHostels();
+    });
+    </script>
+    <script>
+      const sidebarToggle = document.getElementById("sidebarToggle");
+      const adminSidebar = document.querySelector(".admin-sidebar");
+      const sidebarOverlay = document.getElementById("sidebarOverlay");
+      function toggleSidebar() {
+        const isOpen = adminSidebar.classList.toggle("open");
+        sidebarOverlay.classList.toggle("open");
+        sidebarToggle.querySelector("i").className = isOpen ? "fas fa-times" : "fas fa-bars";
+      }
+      function closeSidebar() {
+        adminSidebar.classList.remove("open");
+        sidebarOverlay.classList.remove("open");
+        sidebarToggle.querySelector("i").className = "fas fa-bars";
+      }
+      sidebarToggle.addEventListener("click", toggleSidebar);
+      sidebarOverlay.addEventListener("click", closeSidebar);
+    </script>
+  </body>
+</html>

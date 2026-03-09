@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login - AccraHostels</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../client/css/style.css" />
+    <link rel="stylesheet" href="css/admin.css" />
+  </head>
+  <body>
+    <div class="admin-login-page">
+      <div class="login-image-side">
+        <img
+          src="../client/img/office-skyscrapers-business-district (1).jpg"
+          alt="Hostels"
+        />
+      </div>
+      <div class="admin-login-card">
+        <div class="login-logo">
+          <h2>Accra<span>Hostels</span></h2>
+          <p>Admin Panel — Sign in to continue</p>
+        </div>
+
+        <div class="login-error" id="loginError">
+          <i class="fas fa-exclamation-circle"></i>
+          <span id="errorMsg">Invalid credentials</span>
+        </div>
+
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="email"
+              ><i
+                class="fas fa-envelope"
+                style="margin-right: 0.35rem; color: #6366f1"
+              ></i>
+              Email Address</label
+            >
+            <input
+              type="email"
+              id="email"
+              placeholder="admin@accrahostels.com"
+              required
+              autocomplete="email"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="password"
+              ><i
+                class="fas fa-lock"
+                style="margin-right: 0.35rem; color: #6366f1"
+              ></i>
+              Password</label
+            >
+            <input
+              type="password"
+              id="password"
+              placeholder="Enter your password"
+              required
+              autocomplete="current-password"
+            />
+          </div>
+
+          <div class="login-options">
+            <label> <input type="checkbox" id="remember" /> Remember me </label>
+            <a href="#">Forgot password?</a>
+          </div>
+
+          <button type="submit" class="admin-login-btn">
+            <i class="fas fa-sign-in-alt"></i> Sign In
+          </button>
+        </form>
+
+        <div class="login-footer">
+          &copy; 2026 AccraHostels. All rights reserved.<br />
+          <a
+            href="../client/index.html"
+            style="color: #6366f1; text-decoration: none; font-weight: 500"
+          >
+            <i class="fas fa-arrow-left"></i> Back to main site
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById("loginForm");
+        const errorBox = document.getElementById("loginError");
+        const errorMsg = document.getElementById("errorMsg");
+
+        // If already logged in, redirect to dashboard
+        try {
+          const auth = JSON.parse(localStorage.getItem("adminAuth"));
+          if (auth && auth.loggedIn) {
+            window.location.href = "index.html";
+            return;
+          }
+        } catch (e) {}
+
+        // Admin credentials
+        const ADMIN_EMAIL = "admin@accrahostels.com";
+        const ADMIN_PASS = "admin123";
+
+        form.addEventListener("submit", (e) => {
+          e.preventDefault();
+          errorBox.style.display = "none";
+
+          const email = document.getElementById("email").value.trim();
+          const pass = document.getElementById("password").value;
+
+          if (!email || !email.includes("@")) {
+            errorBox.style.display = "block";
+            errorMsg.textContent = "Please enter a valid email address.";
+            return;
+          }
+          if (!pass) {
+            errorBox.style.display = "block";
+            errorMsg.textContent = "Please enter your password.";
+            return;
+          }
+
+          if (email === ADMIN_EMAIL && pass === ADMIN_PASS) {
+            localStorage.setItem(
+              "adminAuth",
+              JSON.stringify({
+                email: email,
+                loggedIn: true,
+                timestamp: Date.now(),
+              }),
+            );
+            window.location.href = "index.html";
+          } else {
+            errorBox.style.display = "block";
+            errorMsg.textContent =
+              "Invalid email or password. Try admin@accrahostels.com / admin123";
+            document.getElementById("password").value = "";
+            document.getElementById("password").focus();
+          }
+        });
+
+        // Hide error when user starts typing
+        document.getElementById("email").addEventListener("input", () => {
+          errorBox.style.display = "none";
+        });
+        document.getElementById("password").addEventListener("input", () => {
+          errorBox.style.display = "none";
+        });
+      });
+    </script>
+  </body>
+</html>

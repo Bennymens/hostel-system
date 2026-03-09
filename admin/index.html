@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - AccraHostels</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../client/css/style.css" />
+    <link rel="stylesheet" href="css/admin.css" />
+  </head>
+  <body>
+    <div class="admin-layout">
+      <!-- Mobile Hamburger -->
+      <button class="sidebar-toggle" id="sidebarToggle">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+      <!-- Sidebar -->
+      <aside class="admin-sidebar">
+        <a href="index.html" class="sidebar-link active">
+          <i class="fas fa-home"></i> Dashboard
+        </a>
+
+        <div class="sidebar-label">Features</div>
+        <a href="students.html" class="sidebar-link">
+          <i class="fas fa-user-plus"></i> Register Student
+        </a>
+        <a href="students.html" class="sidebar-link">
+          <i class="fas fa-id-card"></i> View Student Acc.
+        </a>
+        <a href="bookings.html" class="sidebar-link">
+          <i class="fas fa-bookmark"></i> Book Hostel
+        </a>
+        <a href="hostels.html" class="sidebar-link">
+          <i class="fas fa-door-open"></i> Manage Rooms
+        </a>
+
+        <div class="sidebar-label">Settings</div>
+        <a href="settings.html" class="sidebar-link">
+          <i class="fas fa-cog"></i> Settings
+        </a>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="admin-main">
+        <!-- Greeting -->
+        <div class="admin-greeting">
+          <h1 id="greetingText">Good Morning, admin!</h1>
+        </div>
+
+        <!-- Stat Cards -->
+        <div class="admin-stats">
+          <div class="stat-card">
+            <div class="stat-card-left">
+              <div class="stat-card-value" id="statStudents">14</div>
+              <div class="stat-card-label">Registered Students</div>
+            </div>
+            <div class="stat-icon purple">
+              <i class="fas fa-user-friends"></i>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-left">
+              <div class="stat-card-value" id="statRooms">9</div>
+              <div class="stat-card-label">Total Rooms</div>
+            </div>
+            <div class="stat-icon blue"><i class="fas fa-th-large"></i></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-left">
+              <div class="stat-card-value" id="statBooked">6</div>
+              <div class="stat-card-label">Booked Rooms</div>
+            </div>
+            <div class="stat-icon teal"><i class="fas fa-book-open"></i></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-left">
+              <div class="stat-card-value" id="statCourses">9</div>
+              <div class="stat-card-label">Featured Courses</div>
+            </div>
+            <div class="stat-icon indigo"><i class="fas fa-globe"></i></div>
+          </div>
+        </div>
+
+        <!-- Student Management Table -->
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3>Hostel Student Management</h3>
+          </div>
+          <p class="table-desc">Displaying all the registered students list.</p>
+
+          <div class="table-controls">
+            <div class="table-show">
+              Show
+              <select id="entriesCount">
+                <option value="5">5</option>
+                <option value="10" selected>10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+              </select>
+              entries
+            </div>
+            <div class="table-search">
+              Search:
+              <input type="text" id="tableSearch" placeholder="" />
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="admin-table data-table" id="studentTable">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Reg. No. <i class="fas fa-sort"></i></th>
+                  <th>Student's Name <i class="fas fa-sort"></i></th>
+                  <th>Room No. <i class="fas fa-sort"></i></th>
+                  <th>Seater <i class="fas fa-sort"></i></th>
+                  <th>Staying From <i class="fas fa-sort"></i></th>
+                  <th>Contact <i class="fas fa-sort"></i></th>
+                  <th>Actions <i class="fas fa-sort"></i></th>
+                </tr>
+              </thead>
+              <tbody id="studentTableBody">
+                <tr>
+                  <td>1</td>
+                  <td>11101</td>
+                  <td>Mary A. Martin</td>
+                  <td>200</td>
+                  <td>2</td>
+                  <td>2021-03-07</td>
+                  <td>7455558855</td>
+                  <td class="actions-cell">
+                    <button class="action-btn view-btn" title="View">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                    </button>
+                    <button class="action-btn delete-btn" title="Delete">
+                      <i class="fas fa-times-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>CA003</td>
+                  <td>Richard J. Summers</td>
+                  <td>112</td>
+                  <td>3</td>
+                  <td>2022-04-04</td>
+                  <td>1325658800</td>
+                  <td class="actions-cell">
+                    <button class="action-btn view-btn" title="View">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                    </button>
+                    <button class="action-btn delete-btn" title="Delete">
+                      <i class="fas fa-times-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>CA006</td>
+                  <td>Jennifer J. Frye</td>
+                  <td>132</td>
+                  <td>5</td>
+                  <td>2022-04-04</td>
+                  <td>7895555544</td>
+                  <td class="actions-cell">
+                    <button class="action-btn view-btn" title="View">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                    </button>
+                    <button class="action-btn delete-btn" title="Delete">
+                      <i class="fas fa-times-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>CA002</td>
+                  <td>Bruce E. Murphy</td>
+                  <td>269</td>
+                  <td>2</td>
+                  <td>2022-05-03</td>
+                  <td>1346565650</td>
+                  <td class="actions-cell">
+                    <button class="action-btn view-btn" title="View">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                    </button>
+                    <button class="action-btn delete-btn" title="Delete">
+                      <i class="fas fa-times-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td>CA009</td>
+                  <td>Nancy W. Vasquez</td>
+                  <td>100</td>
+                  <td>5</td>
+                  <td>2022-04-17</td>
+                  <td>3547777770</td>
+                  <td class="actions-cell">
+                    <button class="action-btn view-btn" title="View">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                    </button>
+                    <button class="action-btn delete-btn" title="Delete">
+                      <i class="fas fa-times-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>6</td>
+                  <td>CA014</td>
+                  <td>Liam K. Moore</td>
+                  <td>310</td>
+                  <td>1</td>
+                  <td>2022-04-10</td>
+                  <td>7854441014</td>
+                  <td class="actions-cell">
+                    <button class="action-btn view-btn" title="View">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                    </button>
+                    <button class="action-btn delete-btn" title="Delete">
+                      <i class="fas fa-times-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>7</td>
+                  <td>CA017</td>
+                  <td>Sophia A. Chen</td>
+                  <td>215</td>
+                  <td>2</td>
+                  <td>2022-06-15</td>
+                  <td>2334567890</td>
+                  <td class="actions-cell">
+                    <button class="action-btn view-btn" title="View">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                    </button>
+                    <button class="action-btn delete-btn" title="Delete">
+                      <i class="fas fa-times-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>8</td>
+                  <td>CA021</td>
+                  <td>Daniel O. Kwarteng</td>
+                  <td>145</td>
+                  <td>3</td>
+                  <td>2022-08-20</td>
+                  <td>5467891234</td>
+                  <td class="actions-cell">
+                    <button class="action-btn view-btn" title="View">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                    </button>
+                    <button class="action-btn delete-btn" title="Delete">
+                      <i class="fas fa-times-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>9</td>
+                  <td>CA025</td>
+                  <td>Grace M. Owusu</td>
+                  <td>178</td>
+                  <td>2</td>
+                  <td>2023-01-10</td>
+                  <td>9012345678</td>
+                  <td class="actions-cell">
+                    <button class="action-btn view-btn" title="View">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                    </button>
+                    <button class="action-btn delete-btn" title="Delete">
+                      <i class="fas fa-times-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>10</td>
+                  <td>CA030</td>
+                  <td>Emmanuel T. Addo</td>
+                  <td>250</td>
+                  <td>4</td>
+                  <td>2023-02-14</td>
+                  <td>6789012345</td>
+                  <td class="actions-cell">
+                    <button class="action-btn view-btn" title="View">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                    </button>
+                    <button class="action-btn delete-btn" title="Delete">
+                      <i class="fas fa-times-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>11</td>
+                  <td>CA033</td>
+                  <td>Priscilla K. Mensah</td>
+                  <td>302</td>
+                  <td>1</td>
+                  <td>2023-03-22</td>
+                  <td>3456789012</td>
+                  <td class="actions-cell">
+                    <button class="action-btn view-btn" title="View">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                    </button>
+                    <button class="action-btn delete-btn" title="Delete">
+                      <i class="fas fa-times-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>12</td>
+                  <td>CA038</td>
+                  <td>Isaac B. Tetteh</td>
+                  <td>189</td>
+                  <td>3</td>
+                  <td>2023-05-01</td>
+                  <td>1234567890</td>
+                  <td class="actions-cell">
+                    <button class="action-btn view-btn" title="View">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                    </button>
+                    <button class="action-btn delete-btn" title="Delete">
+                      <i class="fas fa-times-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>13</td>
+                  <td>CA042</td>
+                  <td>Felicia N. Asare</td>
+                  <td>221</td>
+                  <td>2</td>
+                  <td>2023-07-18</td>
+                  <td>8901234567</td>
+                  <td class="actions-cell">
+                    <button class="action-btn view-btn" title="View">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                    </button>
+                    <button class="action-btn delete-btn" title="Delete">
+                      <i class="fas fa-times-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>14</td>
+                  <td>CA047</td>
+                  <td>Michael A. Boateng</td>
+                  <td>156</td>
+                  <td>4</td>
+                  <td>2023-09-05</td>
+                  <td>4567890123</td>
+                  <td class="actions-cell">
+                    <button class="action-btn view-btn" title="View">
+                      <i class="fas fa-expand-arrows-alt"></i>
+                    </button>
+                    <button class="action-btn delete-btn" title="Delete">
+                      <i class="fas fa-times-circle"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="table-footer">
+            <div class="table-info" id="tableInfo">
+              Showing 1 to 10 of 14 entries
+            </div>
+            <div class="table-pagination" id="tablePagination">
+              <button class="page-btn" id="prevPage" disabled>Previous</button>
+              <button class="page-btn page-num active">1</button>
+              <button class="page-btn page-num">2</button>
+              <button class="page-btn" id="nextPage">Next</button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Greeting based on time
+        const hour = new Date().getHours();
+        const greetEl = document.getElementById("greetingText");
+        if (greetEl) {
+          if (hour < 12) greetEl.textContent = "Good Morning, admin!";
+          else if (hour < 17) greetEl.textContent = "Good Afternoon, admin!";
+          else greetEl.textContent = "Good Evening, admin!";
+        }
+
+        // Table functionality
+        const tableBody = document.getElementById("studentTableBody");
+        const allRows = Array.from(tableBody.querySelectorAll("tr"));
+        const entriesSelect = document.getElementById("entriesCount");
+        const searchInput = document.getElementById("tableSearch");
+        const tableInfo = document.getElementById("tableInfo");
+        const pagination = document.getElementById("tablePagination");
+        const prevBtn = document.getElementById("prevPage");
+        const nextBtn = document.getElementById("nextPage");
+
+        let currentPage = 1;
+        let perPage = parseInt(entriesSelect.value);
+        let filteredRows = [...allRows];
+
+        function render() {
+          const total = filteredRows.length;
+          const totalPages = Math.ceil(total / perPage);
+          currentPage = Math.min(currentPage, totalPages || 1);
+
+          const start = (currentPage - 1) * perPage;
+          const end = start + perPage;
+
+          allRows.forEach((r) => (r.style.display = "none"));
+          filteredRows.slice(start, end).forEach((r) => (r.style.display = ""));
+
+          // Info
+          if (total === 0) {
+            tableInfo.textContent = "No matching entries";
+          } else {
+            tableInfo.textContent = `Showing ${start + 1} to ${Math.min(end, total)} of ${total} entries`;
+          }
+
+          // Pagination
+          const pageNums = pagination.querySelectorAll(".page-num");
+          pageNums.forEach((b) => b.remove());
+          for (let i = 1; i <= totalPages; i++) {
+            const btn = document.createElement("button");
+            btn.className =
+              "page-btn page-num" + (i === currentPage ? " active" : "");
+            btn.textContent = i;
+            btn.addEventListener("click", () => {
+              currentPage = i;
+              render();
+            });
+            pagination.insertBefore(btn, nextBtn);
+          }
+
+          prevBtn.disabled = currentPage <= 1;
+          nextBtn.disabled = currentPage >= totalPages;
+        }
+
+        entriesSelect.addEventListener("change", () => {
+          perPage = parseInt(entriesSelect.value);
+          currentPage = 1;
+          render();
+        });
+
+        searchInput.addEventListener("input", () => {
+          const q = searchInput.value.toLowerCase();
+          filteredRows = allRows.filter((r) =>
+            r.textContent.toLowerCase().includes(q),
+          );
+          currentPage = 1;
+          render();
+        });
+
+        prevBtn.addEventListener("click", () => {
+          if (currentPage > 1) {
+            currentPage--;
+            render();
+          }
+        });
+        nextBtn.addEventListener("click", () => {
+          currentPage++;
+          render();
+        });
+
+        // Delete action
+        tableBody.addEventListener("click", (e) => {
+          const delBtn = e.target.closest(".delete-btn");
+          if (delBtn) {
+            const row = delBtn.closest("tr");
+            const name = row.children[2].textContent;
+            if (confirm(`Delete student "${name}"?`)) {
+              row.remove();
+              const idx = allRows.indexOf(row);
+              if (idx > -1) allRows.splice(idx, 1);
+              filteredRows = filteredRows.filter((r) => r !== row);
+              // Update stat
+              const statEl = document.getElementById("statStudents");
+              if (statEl) statEl.textContent = allRows.length;
+              render();
+            }
+          }
+        });
+
+        // Column sorting
+        const ths = document.querySelectorAll(".data-table thead th");
+        ths.forEach((th, colIdx) => {
+          if (!th.querySelector("i")) return;
+          let asc = true;
+          th.style.cursor = "pointer";
+          th.addEventListener("click", () => {
+            filteredRows.sort((a, b) => {
+              const aVal = a.children[colIdx].textContent.trim();
+              const bVal = b.children[colIdx].textContent.trim();
+              const aNum = parseFloat(aVal);
+              const bNum = parseFloat(bVal);
+              if (!isNaN(aNum) && !isNaN(bNum))
+                return asc ? aNum - bNum : bNum - aNum;
+              return asc ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+            });
+            asc = !asc;
+            currentPage = 1;
+            render();
+          });
+        });
+
+        render();
+      });
+    </script>
+    <script>
+      const sidebarToggle = document.getElementById("sidebarToggle");
+      const adminSidebar = document.querySelector(".admin-sidebar");
+      const sidebarOverlay = document.getElementById("sidebarOverlay");
+      function toggleSidebar() {
+        const isOpen = adminSidebar.classList.toggle("open");
+        sidebarOverlay.classList.toggle("open");
+        sidebarToggle.querySelector("i").className = isOpen
+          ? "fas fa-times"
+          : "fas fa-bars";
+      }
+      function closeSidebar() {
+        adminSidebar.classList.remove("open");
+        sidebarOverlay.classList.remove("open");
+        sidebarToggle.querySelector("i").className = "fas fa-bars";
+      }
+      sidebarToggle.addEventListener("click", toggleSidebar);
+      sidebarOverlay.addEventListener("click", closeSidebar);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Settings - Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../client/css/style.css" />
+    <link rel="stylesheet" href="css/admin.css" />
+  </head>
+  <body>
+    <div class="admin-layout">
+      <!-- Mobile Hamburger -->
+      <button class="sidebar-toggle" id="sidebarToggle">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+      <!-- Sidebar -->
+      <aside class="admin-sidebar">
+        <a href="index.html" class="sidebar-link">
+          <i class="fas fa-home"></i> Dashboard
+        </a>
+
+        <div class="sidebar-label">Features</div>
+        <a href="students.html" class="sidebar-link">
+          <i class="fas fa-user-plus"></i> Register Student
+        </a>
+        <a href="students.html" class="sidebar-link">
+          <i class="fas fa-id-card"></i> View Student Acc.
+        </a>
+        <a href="bookings.html" class="sidebar-link">
+          <i class="fas fa-bookmark"></i> Book Hostel
+        </a>
+        <a href="hostels.html" class="sidebar-link">
+          <i class="fas fa-door-open"></i> Manage Rooms
+        </a>
+
+        <div class="sidebar-label">Settings</div>
+        <a href="settings.html" class="sidebar-link active">
+          <i class="fas fa-cog"></i> Settings
+        </a>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="admin-main">
+        <div class="admin-greeting">
+          <h1>Settings</h1>
+        </div>
+
+        <!-- Profile Settings -->
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3>
+              <i
+                class="fas fa-user-circle"
+                style="margin-right: 0.5rem; color: #6366f1"
+              ></i>
+              Profile Settings
+            </h3>
+          </div>
+          <div class="settings-section">
+            <div class="settings-form">
+              <div class="form-row-settings">
+                <div class="form-group">
+                  <label>Full Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="adminName"
+                    value="Admin User"
+                  />
+                </div>
+                <div class="form-group">
+                  <label>Email Address</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="adminEmail"
+                    value="admin@accrahostels.com"
+                  />
+                </div>
+              </div>
+              <div class="form-row-settings">
+                <div class="form-group">
+                  <label>Phone Number</label>
+                  <input
+                    type="tel"
+                    class="form-control"
+                    id="adminPhone"
+                    value="024 000 0000"
+                  />
+                </div>
+                <div class="form-group">
+                  <label>Role</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    value="Super Admin"
+                    disabled
+                  />
+                </div>
+              </div>
+              <button class="settings-save-btn" id="saveProfile">
+                <i class="fas fa-save"></i> Save Profile
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Change Password -->
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3>
+              <i
+                class="fas fa-lock"
+                style="margin-right: 0.5rem; color: #6366f1"
+              ></i>
+              Change Password
+            </h3>
+          </div>
+          <div class="settings-section">
+            <div class="settings-form">
+              <div class="form-row-settings">
+                <div class="form-group">
+                  <label>Current Password</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="currentPass"
+                    placeholder="Enter current password"
+                  />
+                </div>
+                <div class="form-group">
+                  <label>New Password</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="newPass"
+                    placeholder="Enter new password"
+                  />
+                </div>
+              </div>
+              <div class="form-row-settings">
+                <div class="form-group">
+                  <label>Confirm New Password</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="confirmPass"
+                    placeholder="Confirm new password"
+                  />
+                </div>
+                <div class="form-group"></div>
+              </div>
+              <button class="settings-save-btn" id="changePassword">
+                <i class="fas fa-key"></i> Update Password
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- General Settings -->
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3>
+              <i
+                class="fas fa-sliders-h"
+                style="margin-right: 0.5rem; color: #6366f1"
+              ></i>
+              General Settings
+            </h3>
+          </div>
+          <div class="settings-section">
+            <div class="settings-form">
+              <div class="form-row-settings">
+                <div class="form-group">
+                  <label>Site Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="siteName"
+                    value="AccraHostels"
+                  />
+                </div>
+                <div class="form-group">
+                  <label>Default Currency</label>
+                  <select class="form-control" id="currency">
+                    <option value="GHS" selected>GH₵ – Ghana Cedi</option>
+                    <option value="USD">$ – US Dollar</option>
+                    <option value="GBP">£ – British Pound</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row-settings">
+                <div class="form-group">
+                  <label>Academic Year</label>
+                  <select class="form-control" id="academicYear">
+                    <option>2025 / 2026</option>
+                    <option selected>2026 / 2027</option>
+                    <option>2027 / 2028</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Booking Window</label>
+                  <select class="form-control" id="bookingWindow">
+                    <option>Open</option>
+                    <option selected>Semester-based</option>
+                    <option>Closed</option>
+                  </select>
+                </div>
+              </div>
+              <button class="settings-save-btn" id="saveGeneral">
+                <i class="fas fa-save"></i> Save Settings
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Notifications -->
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3>
+              <i
+                class="fas fa-bell"
+                style="margin-right: 0.5rem; color: #6366f1"
+              ></i>
+              Notifications
+            </h3>
+          </div>
+          <div class="settings-section">
+            <div class="settings-toggle-list">
+              <div class="settings-toggle-item">
+                <div>
+                  <div class="toggle-label">Email Notifications</div>
+                  <div class="toggle-desc">
+                    Receive email alerts for new bookings and registrations
+                  </div>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" checked id="emailNotif" />
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+              <div class="settings-toggle-item">
+                <div>
+                  <div class="toggle-label">Booking Confirmations</div>
+                  <div class="toggle-desc">
+                    Auto-send confirmation emails to students after booking
+                  </div>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" checked id="bookingConfirm" />
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+              <div class="settings-toggle-item">
+                <div>
+                  <div class="toggle-label">Payment Reminders</div>
+                  <div class="toggle-desc">
+                    Send payment reminders before due dates
+                  </div>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="paymentRemind" />
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+              <div class="settings-toggle-item">
+                <div>
+                  <div class="toggle-label">Maintenance Mode</div>
+                  <div class="toggle-desc">
+                    Temporarily disable public access to the booking system
+                  </div>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="maintenance" />
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Danger Zone -->
+        <div class="admin-card" style="border: 1px solid #fee2e2">
+          <div class="admin-card-header">
+            <h3 style="color: #dc2626">
+              <i
+                class="fas fa-exclamation-triangle"
+                style="margin-right: 0.5rem"
+              ></i>
+              Danger Zone
+            </h3>
+          </div>
+          <div class="settings-section">
+            <div class="settings-danger-list">
+              <div class="settings-danger-item">
+                <div>
+                  <div class="toggle-label">Reset All Bookings</div>
+                  <div class="toggle-desc">
+                    Clear all booking records for the current academic year
+                  </div>
+                </div>
+                <button class="settings-danger-btn" id="resetBookings">
+                  Reset
+                </button>
+              </div>
+              <div class="settings-danger-item">
+                <div>
+                  <div class="toggle-label">Logout All Sessions</div>
+                  <div class="toggle-desc">
+                    Force logout all admin sessions on other devices
+                  </div>
+                </div>
+                <button class="settings-danger-btn" id="logoutAll">
+                  Logout All
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Save Profile
+        document.getElementById("saveProfile").addEventListener("click", () => {
+          alert("Profile settings saved successfully!");
+        });
+
+        // Change Password
+        document
+          .getElementById("changePassword")
+          .addEventListener("click", () => {
+            const curr = document.getElementById("currentPass").value;
+            const newP = document.getElementById("newPass").value;
+            const conf = document.getElementById("confirmPass").value;
+            if (!curr || !newP || !conf) {
+              alert("Please fill in all password fields.");
+              return;
+            }
+            if (newP !== conf) {
+              alert("New passwords do not match.");
+              return;
+            }
+            if (newP.length < 6) {
+              alert("Password must be at least 6 characters.");
+              return;
+            }
+            alert("Password updated successfully!");
+            document.getElementById("currentPass").value = "";
+            document.getElementById("newPass").value = "";
+            document.getElementById("confirmPass").value = "";
+          });
+
+        // Save General
+        document.getElementById("saveGeneral").addEventListener("click", () => {
+          alert("General settings saved successfully!");
+        });
+
+        // Danger zone
+        document
+          .getElementById("resetBookings")
+          .addEventListener("click", () => {
+            if (
+              confirm(
+                "Are you sure you want to reset ALL bookings? This action cannot be undone.",
+              )
+            ) {
+              alert("All bookings have been reset.");
+            }
+          });
+        document.getElementById("logoutAll").addEventListener("click", () => {
+          if (confirm("Logout all admin sessions on other devices?")) {
+            alert("All other sessions have been logged out.");
+          }
+        });
+      });
+    </script>
+    <script>
+      const sidebarToggle = document.getElementById("sidebarToggle");
+      const adminSidebar = document.querySelector(".admin-sidebar");
+      const sidebarOverlay = document.getElementById("sidebarOverlay");
+      function toggleSidebar() {
+        const isOpen = adminSidebar.classList.toggle("open");
+        sidebarOverlay.classList.toggle("open");
+        sidebarToggle.querySelector("i").className = isOpen
+          ? "fas fa-times"
+          : "fas fa-bars";
+      }
+      function closeSidebar() {
+        adminSidebar.classList.remove("open");
+        sidebarOverlay.classList.remove("open");
+        sidebarToggle.querySelector("i").className = "fas fa-bars";
+      }
+      sidebarToggle.addEventListener("click", toggleSidebar);
+      sidebarOverlay.addEventListener("click", closeSidebar);
+    </script>
+  </body>
+</html>

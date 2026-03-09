@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search Hostels - AccraHostels</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/search.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="navbar-brand">
+        <a href="index.html" class="logo">Accra<span>Hostels</span></a>
+      </div>
+      <div class="navbar-nav" id="navMenu">
+        <a href="search.html" class="active">Hostels</a>
+        <a href="schools.html">Schools</a>
+        <a href="popular.html">Popular</a>
+      </div>
+      <div class="navbar-actions">
+        <a href="register.html" class="btn btn-outline">Sign up</a>
+        <a href="login.html" class="btn btn-primary">Log in</a>
+      </div>
+      <div class="nav-toggle" id="navToggle">
+        <span></span><span></span><span></span>
+      </div>
+    </nav>
+
+    <!-- Search Page Layout -->
+    <div class="search-page">
+      <!-- Sidebar -->
+      <aside class="search-sidebar" id="searchSidebar">
+        <a href="index.html" class="sidebar-back">
+          <i class="fas fa-arrow-left"></i>
+        </a>
+
+        <div class="sidebar-section">
+          <h3>Your search</h3>
+
+          <div class="form-group">
+            <label>School / Area</label>
+            <div class="form-control-icon">
+              <i class="fas fa-map-marker-alt icon"></i>
+              <input
+                type="text"
+                class="form-control"
+                id="searchSchool"
+                placeholder="e.g. University of Ghana, Legon"
+                value="University of Ghana, Legon"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Move-in date</label>
+            <div class="form-control-icon">
+              <i class="fas fa-calendar icon"></i>
+              <input
+                type="date"
+                class="form-control"
+                id="moveInDate"
+                value="2026-09-01"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Move-out date</label>
+            <div class="form-control-icon">
+              <i class="fas fa-calendar icon"></i>
+              <input
+                type="date"
+                class="form-control"
+                id="moveOutDate"
+                value="2027-06-30"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Occupants</label>
+            <div class="form-control-icon">
+              <i class="fas fa-user icon"></i>
+              <select class="form-control" id="occupants">
+                <option value="1">1 student, single room</option>
+                <option value="2" selected>2 students, shared room</option>
+                <option value="3">3 students, shared room</option>
+                <option value="4">4 students, shared room</option>
+              </select>
+            </div>
+          </div>
+
+          <button class="btn btn-primary search-btn" id="searchBtn">
+            <i class="fas fa-search"></i> Search
+          </button>
+        </div>
+
+        <!-- Popular Filters -->
+        <div class="sidebar-section">
+          <div class="filters-header">
+            <h3>Popular filters</h3>
+            <span class="filters-reset" id="resetFilters">Reset</span>
+          </div>
+
+          <div class="checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" name="filter" value="budget" /> Budget
+              hostel
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="filter" value="wifi" checked /> Wi-Fi
+              included
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="filter" value="shuttle" /> Free
+              shuttle to campus
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="filter" value="meals" /> Meals
+              included
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="filter" value="security" /> 24/7
+              Security
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="filter" value="furnished" /> Fully
+              furnished
+            </label>
+          </div>
+        </div>
+
+        <!-- Price per semester -->
+        <div class="sidebar-section">
+          <h3>Price per semester</h3>
+          <div class="price-range-display">
+            <span>GH₵ 500</span>
+            <span id="priceValue">GH₵ 5,000</span>
+          </div>
+          <input
+            type="range"
+            class="price-slider"
+            id="priceRange"
+            min="500"
+            max="10000"
+            value="5000"
+            step="100"
+          />
+        </div>
+
+        <!-- Room Type Filter -->
+        <div class="sidebar-section">
+          <h3>Room type</h3>
+          <div class="checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" name="roomType" value="single" /> Single
+              room
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="roomType" value="shared-2" /> Shared
+              (2 in a room)
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="roomType" value="shared-3" /> Shared
+              (3 in a room)
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="roomType" value="shared-4" /> Shared
+              (4 in a room)
+            </label>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Results -->
+      <main class="search-results">
+        <div class="results-header">
+          <div class="results-info">
+            <p id="resultsCount">
+              20 filtered results for: Legon, Sep 2026 - Jun 2027, 2 students,
+              shared room
+            </p>
+            <h2 id="activeFilter">Wi-Fi included</h2>
+          </div>
+          <select class="sort-select" id="sortBy">
+            <option value="recommended">Sort by</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="rating">Rating</option>
+            <option value="distance">Distance to campus</option>
+          </select>
+          <button class="btn btn-outline map-toggle-btn" id="mapToggle">
+            <i class="fas fa-map"></i> Map View
+          </button>
+        </div>
+
+        <!-- Map View -->
+        <div
+          class="search-map-container"
+          id="searchMapContainer"
+          style="display: none"
+        >
+          <div id="searchMap" class="search-map"></div>
+        </div>
+
+        <!-- Hostel Cards -->
+        <div id="hostelList">
+          <!-- Card 1 -->
+          <div class="hostel-card">
+            <div class="hostel-card-image">
+              <img
+                src="https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=400&h=300&fit=crop"
+                alt="Pentagon Hostel"
+              />
+            </div>
+            <div class="hostel-card-body">
+              <div class="hostel-card-top">
+                <div class="hostel-card-info">
+                  <h3>Pentagon Hostel</h3>
+                  <p class="location">0.3 km from campus gate</p>
+                  <p class="features">
+                    <span>Free cancellation</span> · Wi-Fi included
+                  </p>
+                </div>
+                <div class="hostel-card-rating">
+                  <div class="rating-info">
+                    <div class="rating-text excellent">Excellent</div>
+                    <div class="rating-count">1,820 reviews</div>
+                  </div>
+                  <div class="rating-badge rating-excellent">9.6</div>
+                </div>
+              </div>
+              <div class="hostel-card-details">
+                <p class="room-type">Shared Room (2 in a room)</p>
+                <p class="room-info">
+                  2x single beds · 1x shared bathroom · Desk & wardrobe
+                </p>
+              </div>
+              <div class="hostel-card-bottom">
+                <div class="hostel-card-tags">
+                  <span class="tag tag-hot">#Affordable</span>
+                  <span class="tag tag-popular">#Popular</span>
+                </div>
+                <div class="hostel-card-price-action">
+                  <div>
+                    <div class="price-amount">GH₵ 2,800</div>
+                    <div class="price-period">per semester, 2 students</div>
+                  </div>
+                  <a href="hostel.html?id=1" class="btn btn-primary btn-book"
+                    >See booking options</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="hostel-card">
+            <div class="hostel-card-image">
+              <img
+                src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=400&h=300&fit=crop"
+                alt="Evandy Hostel"
+              />
+            </div>
+            <div class="hostel-card-body">
+              <div class="hostel-card-top">
+                <div class="hostel-card-info">
+                  <h3>Evandy Hostel</h3>
+                  <p class="location">0.5 km from campus gate</p>
+                  <p class="features">
+                    <span>Free shuttle to campus</span> · Wi-Fi included
+                  </p>
+                </div>
+                <div class="hostel-card-rating">
+                  <div class="rating-info">
+                    <div class="rating-text good">Good</div>
+                    <div class="rating-count">792 reviews</div>
+                  </div>
+                  <div class="rating-badge rating-good">8.3</div>
+                </div>
+              </div>
+              <div class="hostel-card-details">
+                <p class="room-type">Standard Room</p>
+                <p class="room-info">
+                  1x queen size bed · 1x shared bathroom · Study area
+                </p>
+              </div>
+              <div class="hostel-card-bottom">
+                <div class="hostel-card-tags">
+                  <span class="tag tag-affordable">#Budget</span>
+                </div>
+                <div class="hostel-card-price-action">
+                  <div>
+                    <div class="price-amount">GH₵ 3,500</div>
+                    <div class="price-period">per semester, 2 students</div>
+                  </div>
+                  <a href="hostel.html?id=2" class="btn btn-primary btn-book"
+                    >See booking options</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="hostel-card">
+            <div class="hostel-card-image">
+              <img
+                src="https://images.unsplash.com/photo-1590490360182-c33d955bc90c?w=400&h=300&fit=crop"
+                alt="Akuafo Hall Annex"
+              />
+            </div>
+            <div class="hostel-card-body">
+              <div class="hostel-card-top">
+                <div class="hostel-card-info">
+                  <h3>Akuafo Hall Annex</h3>
+                  <p class="location">On campus</p>
+                  <p class="features">Wi-Fi included · 24/7 Security</p>
+                </div>
+                <div class="hostel-card-rating">
+                  <div class="rating-info">
+                    <div class="rating-text excellent">Excellent</div>
+                    <div class="rating-count">2,100 reviews</div>
+                  </div>
+                  <div class="rating-badge rating-excellent">9.5</div>
+                </div>
+              </div>
+              <div class="hostel-card-details">
+                <p class="room-type">Premium Single Room</p>
+                <p class="room-info">
+                  1x single bed · Private bathroom · AC & Study desk
+                </p>
+              </div>
+              <div class="hostel-card-bottom">
+                <div class="hostel-card-tags">
+                  <span class="tag tag-popular">#Popular</span>
+                  <span class="tag tag-new">#Premium</span>
+                </div>
+                <div class="hostel-card-price-action">
+                  <div>
+                    <div class="price-amount">GH₵ 5,200</div>
+                    <div class="price-period">per semester, 1 student</div>
+                  </div>
+                  <a href="hostel.html?id=3" class="btn btn-primary btn-book"
+                    >See booking options</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="hostel-card">
+            <div class="hostel-card-image">
+              <img
+                src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=400&h=300&fit=crop"
+                alt="TF Hostel"
+              />
+            </div>
+            <div class="hostel-card-body">
+              <div class="hostel-card-top">
+                <div class="hostel-card-info">
+                  <h3>TF Hostel</h3>
+                  <p class="location">1.2 km from campus gate</p>
+                  <p class="features">
+                    <span>Meals included</span> · Wi-Fi · Furnished
+                  </p>
+                </div>
+                <div class="hostel-card-rating">
+                  <div class="rating-info">
+                    <div class="rating-text good">Good</div>
+                    <div class="rating-count">640 reviews</div>
+                  </div>
+                  <div class="rating-badge rating-good">7.8</div>
+                </div>
+              </div>
+              <div class="hostel-card-details">
+                <p class="room-type">Shared Room (3 in a room)</p>
+                <p class="room-info">
+                  3x single beds · 1x shared bathroom · Common lounge
+                </p>
+              </div>
+              <div class="hostel-card-bottom">
+                <div class="hostel-card-tags">
+                  <span class="tag tag-hot">#Affordable</span>
+                </div>
+                <div class="hostel-card-price-action">
+                  <div>
+                    <div class="price-amount">GH₵ 1,800</div>
+                    <div class="price-period">per semester, 3 students</div>
+                  </div>
+                  <a href="hostel.html?id=4" class="btn btn-primary btn-book"
+                    >See booking options</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 5 -->
+          <div class="hostel-card">
+            <div class="hostel-card-image">
+              <img
+                src="https://images.unsplash.com/photo-1564078516393-cf04bd966897?w=400&h=300&fit=crop"
+                alt="Midway Hostel"
+              />
+            </div>
+            <div class="hostel-card-body">
+              <div class="hostel-card-top">
+                <div class="hostel-card-info">
+                  <h3>Midway Hostel</h3>
+                  <p class="location">0.8 km from campus gate</p>
+                  <p class="features">
+                    <span>Free cancellation</span> · Wi-Fi · 24/7 Security
+                  </p>
+                </div>
+                <div class="hostel-card-rating">
+                  <div class="rating-info">
+                    <div class="rating-text excellent">Excellent</div>
+                    <div class="rating-count">1,450 reviews</div>
+                  </div>
+                  <div class="rating-badge rating-excellent">9.2</div>
+                </div>
+              </div>
+              <div class="hostel-card-details">
+                <p class="room-type">Shared Room (2 in a room)</p>
+                <p class="room-info">
+                  2x single beds · En-suite bathroom · Balcony
+                </p>
+              </div>
+              <div class="hostel-card-bottom">
+                <div class="hostel-card-tags">
+                  <span class="tag tag-popular">#Popular</span>
+                  <span class="tag tag-new">#New</span>
+                </div>
+                <div class="hostel-card-price-action">
+                  <div>
+                    <div class="price-amount">GH₵ 4,200</div>
+                    <div class="price-period">per semester, 2 students</div>
+                  </div>
+                  <a href="hostel.html?id=5" class="btn btn-primary btn-book"
+                    >See booking options</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end hostelList -->
+      </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo">Accra<span>Hostels</span></div>
+          <p>
+            Find the best student hostels near your school in Accra. Safe,
+            affordable, and convenient accommodation for every student.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <a href="index.html">Home</a>
+          <a href="search.html">Browse Hostels</a>
+          <a href="schools.html">Schools</a>
+          <a href="popular.html">Popular</a>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <a href="#">Help Center</a>
+          <a href="#">Contact Us</a>
+          <a href="#">FAQs</a>
+          <a href="#">Terms of Service</a>
+        </div>
+        <div class="footer-col">
+          <h4>Follow Us</h4>
+          <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+          <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+          <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 AccraHostels. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="js/app.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="js/search.js"></script>
+  </body>
+</html>

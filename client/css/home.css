@@ -1,0 +1,404 @@
+/* ============================================
+   Home / Landing Page Styles
+   ============================================ */
+
+/* Hero Slideshow Section */
+.hero {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 6rem;
+}
+
+/* Slideshow */
+.slideshow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.2s ease-in-out;
+}
+
+.slide.active {
+  opacity: 1;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Dark overlay for text readability */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 750px;
+  padding: 0 2rem;
+  color: var(--white);
+}
+
+.hero h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  line-height: 1.15;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.hero p {
+  font-size: 1.2rem;
+  opacity: 0.92;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Explore Now Button */
+.btn-explore {
+  display: inline-block;
+  padding: 1rem 3rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--white);
+  background: var(--primary);
+  border-radius: 50px;
+  letter-spacing: 0.5px;
+  transition:
+    background 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+}
+
+.btn-explore:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.55);
+}
+
+/* Slideshow dots removed
+}
+
+/* Stats Section */
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  padding: 2.5rem 1rem;
+  background: var(--white);
+  border-bottom: 1px solid var(--gray-100);
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-number {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--gray-500);
+  margin-top: 0.25rem;
+}
+
+/* Featured Hostels */
+.section {
+  padding: 3rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.section-header h2 {
+  font-size: 1.5rem;
+  color: var(--gray-900);
+}
+
+.section-header a {
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.section-header a:hover {
+  text-decoration: underline;
+}
+
+/* Hostel Grid */
+.hostel-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.hostel-grid-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.hostel-grid-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+}
+
+.hostel-grid-card .card-image {
+  height: 240px;
+  overflow: hidden;
+  position: relative;
+}
+
+.hostel-grid-card .card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.hostel-grid-card:hover .card-image img {
+  transform: scale(1.05);
+}
+
+.hostel-grid-card .card-image .card-badge {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+}
+
+.hostel-grid-card .card-body {
+  padding: 1rem;
+}
+
+.hostel-grid-card .card-body h3 {
+  font-size: 1.05rem;
+  color: var(--gray-900);
+  margin-bottom: 0.25rem;
+}
+
+.hostel-grid-card .card-body .card-location {
+  font-size: 0.82rem;
+  color: var(--gray-500);
+  margin-bottom: 0.5rem;
+}
+
+.hostel-grid-card .card-body .card-features {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
+.hostel-grid-card .card-body .card-features span {
+  font-size: 0.72rem;
+  padding: 0.2rem 0.5rem;
+  background: var(--gray-100);
+  color: var(--gray-600);
+  border-radius: 4px;
+}
+
+.hostel-grid-card .card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid var(--gray-100);
+}
+
+.hostel-grid-card .card-footer .card-price {
+  font-weight: 800;
+  color: var(--gray-900);
+  font-size: 1.1rem;
+}
+
+.hostel-grid-card .card-footer .card-price small {
+  font-weight: 400;
+  font-size: 0.72rem;
+  color: var(--gray-500);
+  display: block;
+}
+
+.hostel-grid-card .card-footer .card-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.hostel-grid-card .card-footer .card-rating span {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--gray-700);
+}
+
+/* School Areas Section */
+.school-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.school-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.school-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.school-card .school-icon {
+  width: 56px;
+  height: 56px;
+  background: var(--primary-light);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 0.75rem;
+  font-size: 1.5rem;
+  color: var(--primary);
+}
+
+.school-card h4 {
+  font-size: 0.95rem;
+  color: var(--gray-800);
+  margin-bottom: 0.25rem;
+}
+
+.school-card p {
+  font-size: 0.8rem;
+  color: var(--gray-500);
+}
+
+/* How it Works */
+.how-it-works {
+  background: var(--white);
+  padding: 3rem 2rem;
+}
+
+.how-it-works .how-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.how-step {
+  text-align: center;
+}
+
+.how-step .step-number {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.2rem;
+  margin: 0 auto 0.75rem;
+}
+
+.how-step h4 {
+  font-size: 1rem;
+  color: var(--gray-800);
+  margin-bottom: 0.35rem;
+}
+
+.how-step p {
+  font-size: 0.85rem;
+  color: var(--gray-500);
+  line-height: 1.5;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .hostel-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .school-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    min-height: 450px;
+  }
+  .hero h1 {
+    font-size: 2rem;
+  }
+  .hero p {
+    font-size: 1rem;
+  }
+  .btn-explore {
+    padding: 0.85rem 2.5rem;
+    font-size: 1rem;
+  }
+  .stats {
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+  .hostel-grid {
+    grid-template-columns: 1fr;
+  }
+  .school-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .how-it-works .how-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    min-height: 400px;
+  }
+  .hero h1 {
+    font-size: 1.6rem;
+  }
+  .school-grid {
+    grid-template-columns: 1fr;
+  }
+  .how-it-works .how-grid {
+    grid-template-columns: 1fr;
+  }
+}
