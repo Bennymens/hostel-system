@@ -1005,13 +1005,42 @@
     grid-template-columns: 1fr;
   }
 
-  .admin-login-card {
-    flex: 1;
-    padding: 2rem 1.5rem;
+  /* Admin login: image behind form on mobile */
+  .admin-login-page {
+    position: relative;
   }
 
   .login-image-side {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .login-image-side::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+  }
+
+  .login-image-overlay {
     display: none;
+  }
+
+  .admin-login-card {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 2rem 1.25rem;
+    margin: 1rem;
+    border-radius: 1rem;
+    max-width: 100%;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+    overflow-y: auto;
+    max-height: calc(100vh - 2rem);
   }
 
   .student-detail-grid {
