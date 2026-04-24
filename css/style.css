@@ -702,6 +702,18 @@ h5 {
     display: none;
   }
 
+  /* Keep the login button visible, just shrink it */
+  .navbar-actions .btn-primary {
+    padding: 0.35rem 0.85rem;
+    font-size: 0.8rem;
+  }
+
+  /* Shrink the navbar logo on mobile */
+  .navbar-brand .logo {
+    font-size: 0.85rem;
+    letter-spacing: 0;
+  }
+
   h1 {
     font-size: 1.25rem;
   }
