@@ -364,10 +364,10 @@
     min-height: 450px;
   }
   .hero h1 {
-    font-size: 2rem;
+    font-size: 1.6rem;
   }
   .hero p {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
   .btn-explore {
     padding: 0.85rem 2.5rem;
@@ -390,10 +390,10 @@
 
 @media (max-width: 480px) {
   .hero {
-    min-height: 400px;
+    min-height: 350px;
   }
   .hero h1 {
-    font-size: 1.6rem;
+    font-size: 1.3rem;
   }
   .school-grid {
     grid-template-columns: 1fr;
