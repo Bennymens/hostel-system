@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Login - AccraHostels</title>
+    <title>Admin Login - UPSA ACCOMMODATION FINDER</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
@@ -47,7 +47,7 @@
             <input
               type="email"
               id="email"
-              placeholder="admin@accrahostels.com"
+              placeholder="admin@upsaaccommodationfinder.com"
               required
               autocomplete="email"
             />
@@ -81,7 +81,7 @@
         </form>
 
         <div class="login-footer">
-          &copy; 2026 AccraHostels. All rights reserved.<br />
+          &copy; 2026 UPSA ACCOMMODATION FINDER. All rights reserved.<br />
           <a
             href="../index.html"
             style="color: #6366f1; text-decoration: none; font-weight: 500"
@@ -108,7 +108,7 @@
         } catch (e) {}
 
         // Admin credentials
-        const ADMIN_EMAIL = "admin@accrahostels.com";
+        const ADMIN_EMAIL = "admin@upsaaccommodationfinder.com";
         const ADMIN_PASS = "admin123";
 
         form.addEventListener("submit", (e) => {
@@ -142,7 +142,7 @@
           } else {
             errorBox.style.display = "block";
             errorMsg.textContent =
-              "Invalid email or password. Try admin@accrahostels.com / admin123";
+              "Invalid email or password. Try admin@upsaaccommodationfinder.com / admin123";
             document.getElementById("password").value = "";
             document.getElementById("password").focus();
           }
