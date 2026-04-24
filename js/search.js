@@ -303,4 +303,7 @@ document.addEventListener("DOMContentLoaded", () => {
       searchMap.setView(bounds[0], 15);
     }
   }
+
+  // Initial render
+  filterHostels();
 });
