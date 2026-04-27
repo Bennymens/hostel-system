@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manage Hostels | Admin Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo"><i class="fas fa-bed"></i> UPSA <span>FINDER</span></div>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="Dashboard.html" class="nav-link"><i class="fas fa-th-large"></i> Overview</a>
+                <a href="admin_hostels.html" class="nav-link active"><i class="fas fa-building"></i> Hostels</a>
+                <a href="admin_bookings.html" class="nav-link"><i class="fas fa-calendar-check"></i> Bookings</a>
+                <a href="admin_users.html" class="nav-link"><i class="fas fa-users"></i> Users</a>
+                <a href="admin_analytics.html" class="nav-link"><i class="fas fa-chart-line"></i> Analytics</a>
+                <a href="admin_settings.html" class="nav-link"><i class="fas fa-cog"></i> Settings</a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="#" class="nav-link" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="dashboard-header">
+                <div class="flex items-center gap-4">
+                    <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
+                    <div class="header-search">
+                        <div class="form-control-icon">
+                            <i class="fas fa-search icon"></i>
+                            <input type="text" class="form-control" placeholder="Search hostels...">
+                        </div>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="notification-btn"><i class="far fa-bell"></i><span class="notification-badge"></span></button>
+                    <div class="admin-profile">
+                        <div class="admin-avatar">A</div>
+                        <div class="admin-info"><span>Admin User</span><small>Super Admin</small></div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="dashboard-content">
+                <div class="page-header flex justify-between items-center">
+                    <div>
+                        <h1>Manage Hostels</h1>
+                        <p>Add, edit, or remove hostel listings.</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="openHostelModal()">
+                        <i class="fas fa-plus"></i> Add New Hostel
+                    </button>
+                </div>
+                <div class="card">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Hostel Name</th>
+                                    <th>Location</th>
+                                    <th>Rooms</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="hostels-list-table"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="modal-overlay" class="modal-overlay">
+        <div id="hostel-modal" class="modal-card">
+            <div class="modal-header">
+                <h3 id="hostel-modal-title">Add New Hostel</h3>
+                <button class="close-modal" onclick="closeModal('hostel-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="hostel-form">
+                    <input type="hidden" id="hostel-id">
+                    <div class="form-group"><label>Hostel Name</label><input type="text" id="hostel-name" class="form-control" required></div>
+                    <div class="form-group"><label>Location</label><input type="text" id="hostel-location" class="form-control" required></div>
+                    <div class="grid-2 gap-3">
+                        <div class="form-group"><label>Rooms Available</label><input type="number" id="hostel-rooms" class="form-control" required></div>
+                        <div class="form-group"><label>Price (GH₵)</label><input type="number" id="hostel-price" class="form-control" required></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select id="hostel-category" class="form-control">
+                            <option value="hot">Premium</option>
+                            <option value="popular">Popular</option>
+                            <option value="affordable">Budget</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Room Size (sqm)</label>
+                        <input type="text" id="hostel-roomsize" class="form-control" placeholder="e.g. 20sqm">
+                    </div>
+                    <div class="form-group">
+                        <label>Amenities (comma separated)</label>
+                        <input type="text" id="hostel-amenities" class="form-control" placeholder="e.g. Wi-Fi, AC, Study Desk">
+                    </div>
+                    <div class="modal-footer mt-4">
+                        <button type="button" class="btn btn-outline" onclick="closeModal('hostel-modal')">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Hostel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

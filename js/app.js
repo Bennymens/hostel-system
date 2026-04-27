@@ -1,5 +1,5 @@
 /* ============================================
-   AccraHostels - Shared App JavaScript
+   UPSA ACCOMMODATION FINDER - Shared App JavaScript
    ============================================ */
 
 // ---- Mobile Nav Toggle ----
@@ -38,18 +38,18 @@ function formatGHS(amount) {
 // ---- Simple Auth Helpers (localStorage based) ----
 const Auth = {
   isLoggedIn() {
-    return !!localStorage.getItem("acchostel_user");
+    return !!localStorage.getItem("upsafinder_user");
   },
   getUser() {
-    const u = localStorage.getItem("acchostel_user");
+    const u = localStorage.getItem("upsafinder_user");
     return u ? JSON.parse(u) : null;
   },
   login(user) {
-    localStorage.setItem("acchostel_user", JSON.stringify(user));
+    localStorage.setItem("upsafinder_user", JSON.stringify(user));
     this.updateNavbar();
   },
   logout() {
-    localStorage.removeItem("acchostel_user");
+    localStorage.removeItem("upsafinder_user");
     window.location.href = "index.html";
   },
   updateNavbar() {
@@ -84,8 +84,8 @@ const HOSTELS = [
   {
     id: 1,
     name: "MB3 Hostel",
-    location: "Near Campus",
-    school: "University of Ghana, Legon",
+    location: "UPSA Area",
+    school: "UPSA",
     lat: 5.6505,
     lng: -0.1862,
     features: ["Wi-Fi included", "24/7 Security", "Study Room"],
@@ -119,8 +119,8 @@ const HOSTELS = [
   {
     id: 2,
     name: "E.N Schroder Hostel",
-    location: "Near Campus",
-    school: "University of Ghana, Legon",
+    location: "UPSA Area",
+    school: "UPSA",
     lat: 5.6488,
     lng: -0.1835,
     features: ["Girls Only", "Large Rooms", "Study Area", "Wi-Fi included"],

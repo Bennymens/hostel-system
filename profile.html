@@ -94,7 +94,7 @@
           <div class="form-group">
             <label>School</label>
             <select class="form-control" id="settingsSchool">
-              <option value="ug">University of Ghana, Legon</option>
+               <option value="upsa">UPSA</option>
               <option value="knust">KNUST, Kumasi</option>
               <option value="ucc">University of Cape Coast</option>
               <option value="ashesi">Ashesi University</option>
@@ -127,7 +127,7 @@
           "S")[0].toUpperCase();
 
         const schoolLabels = {
-          ug: "University of Ghana, Legon",
+          upsa: "UPSA",
           knust: "KNUST, Kumasi",
           ucc: "University of Cape Coast",
           ashesi: "Ashesi University",
@@ -177,7 +177,7 @@
 
         // Render bookings
         const bookings = JSON.parse(
-          localStorage.getItem("acchostel_bookings") || "[]",
+          localStorage.getItem("upsafinder_bookings") || "[]",
         );
         const list = document.getElementById("bookingList");
 
@@ -215,12 +215,12 @@
       function cancelBooking(ref) {
         if (!confirm("Are you sure you want to cancel this booking?")) return;
         const bookings = JSON.parse(
-          localStorage.getItem("acchostel_bookings") || "[]",
+          localStorage.getItem("upsafinder_bookings") || "[]",
         );
         const idx = bookings.findIndex((b) => b.ref === ref);
         if (idx !== -1) {
           bookings[idx].status = "cancelled";
-          localStorage.setItem("acchostel_bookings", JSON.stringify(bookings));
+          localStorage.setItem("upsafinder_bookings", JSON.stringify(bookings));
           showToast("Booking cancelled", "info");
           setTimeout(() => location.reload(), 500);
         }
