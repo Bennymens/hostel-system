@@ -68,13 +68,13 @@ document.addEventListener("DOMContentLoaded", () => {
     <!-- Gallery -->
     <div class="gallery">
       <div class="gallery-main">
-        <img src="${mainImage}" alt="${hostel.name}">
+        <img src="${mainImage}" alt="${hostel.name}" class="clickable-hostel-img" style="cursor: pointer;" title="Click to view full image">
       </div>
       ${
         sideImages.length > 0
           ? `
         <div class="gallery-side">
-          ${sideImages.map((img) => `<img src="${img}" alt="${hostel.name}">`).join("")}
+          ${sideImages.map((img) => `<img src="${img}" alt="${hostel.name}" class="clickable-hostel-img" style="cursor: pointer;">`).join("")}
         </div>
       `
           : ""
@@ -279,4 +279,31 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+
+  // Image Modal setup
+  if (!document.getElementById("imageModal")) {
+    const modalHtml = `
+      <div id="imageModal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.85); justify-content:center; align-items:center; backdrop-filter:blur(5px);">
+        <span class="close-modal" style="position:absolute; top:20px; right:35px; color:#fff; font-size:40px; font-weight:bold; cursor:pointer; transition:0.3s;" onmouseover="this.style.color='#bbb'" onmouseout="this.style.color='#fff'">&times;</span>
+        <img id="modalImg" style="max-width:90%; max-height:90%; border-radius:8px; box-shadow:0 5px 25px rgba(0,0,0,0.5);">
+      </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
+
+    document.getElementById("imageModal").addEventListener('click', function(e) {
+      if (e.target.id === "imageModal" || e.target.classList.contains("close-modal")) {
+        this.style.display = "none";
+        document.body.style.overflow = "auto";
+      }
+    });
+  }
+
+  const galleryImgs = document.querySelectorAll(".clickable-hostel-img");
+  galleryImgs.forEach((img) => {
+    img.addEventListener("click", function() {
+      document.getElementById("imageModal").style.display = "flex";
+      document.getElementById("modalImg").src = this.src;
+      document.body.style.overflow = "hidden";
+    });
+  });
 });

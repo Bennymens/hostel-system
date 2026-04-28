@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
     <div class="order-summary">
       <h3>Booking Summary</h3>
       <div class="order-hostel">
-        <img src="${hostel.image}" alt="${hostel.name}">
+        <img src="${hostel.image}" alt="${hostel.name}" id="bookingHostelImg" style="cursor: pointer;" title="Click to view full image">
         <div class="order-hostel-info">
           <h4>${hostel.name}</h4>
           <p>${hostel.location}</p>
@@ -175,6 +175,33 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
   `;
 
+  // Image Modal setup
+  if (!document.getElementById("imageModal")) {
+    const modalHtml = `
+      <div id="imageModal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.85); justify-content:center; align-items:center; backdrop-filter:blur(5px);">
+        <span class="close-modal" style="position:absolute; top:20px; right:35px; color:#fff; font-size:40px; font-weight:bold; cursor:pointer; transition:0.3s;" onmouseover="this.style.color='#bbb'" onmouseout="this.style.color='#fff'">&times;</span>
+        <img id="modalImg" style="max-width:90%; max-height:90%; border-radius:8px; box-shadow:0 5px 25px rgba(0,0,0,0.5);">
+      </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
+
+    document.getElementById("imageModal").addEventListener('click', function(e) {
+      if (e.target.id === "imageModal" || e.target.classList.contains("close-modal")) {
+        this.style.display = "none";
+        document.body.style.overflow = "auto";
+      }
+    });
+  }
+
+  const bookingHostelImg = document.getElementById("bookingHostelImg");
+  if (bookingHostelImg) {
+    bookingHostelImg.addEventListener("click", function() {
+      document.getElementById("imageModal").style.display = "flex";
+      document.getElementById("modalImg").src = this.src;
+      document.body.style.overflow = "hidden";
+    });
+  }
+
   // Payment method toggle
   const paymentOptions = document.querySelectorAll(".payment-option");
   paymentOptions.forEach((opt) => {
@@ -206,7 +233,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Confirm booking
   const confirmBtn = document.getElementById("confirmBookingBtn");
   if (confirmBtn) {
-    confirmBtn.addEventListener("click", () => {
+    confirmBtn.addEventListener("click", async () => {
       const firstName = document.getElementById("bookFirstName").value.trim();
       const email = document.getElementById("bookEmail").value.trim();
       const phone = document.getElementById("bookPhone").value.trim();
@@ -221,6 +248,10 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
+      const originalText = confirmBtn.innerHTML;
+      confirmBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Confirming...';
+      confirmBtn.disabled = true;
+
       // Generate booking ref
       const ref =
         "AH-" +
@@ -228,11 +259,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "-" +
         Math.random().toString(36).substring(2, 6).toUpperCase();
 
-      // Store booking in localStorage
-      const bookings = JSON.parse(
-        localStorage.getItem("acchostel_bookings") || "[]",
-      );
-      bookings.push({
+      const newBooking = {
         ref: ref,
         hostelId: hostel.id,
         hostelName: hostel.name,
@@ -244,7 +271,23 @@ document.addEventListener("DOMContentLoaded", () => {
         phone: phone,
         status: "confirmed",
         date: new Date().toISOString(),
-      });
+      };
+
+      try {
+        await fetch('/api/bookings', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(newBooking)
+        });
+      } catch (err) {
+        console.warn("Failed to sync with API, storing locally.");
+      }
+
+      // Always store locally as a backup for the profile page
+      const bookings = JSON.parse(
+        localStorage.getItem("acchostel_bookings") || "[]",
+      );
+      bookings.push(newBooking);
       localStorage.setItem("acchostel_bookings", JSON.stringify(bookings));
 
       // Show success
