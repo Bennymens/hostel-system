@@ -56,6 +56,11 @@ const EmailService = {
     };
 
     try {
+      console.log("EmailJS sending with:", {
+        serviceId: this.SERVICE_ID,
+        templateId: this.TEMPLATE_ID,
+        params: templateParams,
+      });
       const response = await emailjs.send(
         this.SERVICE_ID,
         this.TEMPLATE_ID,
@@ -65,7 +70,9 @@ const EmailService = {
       return { success: true, response };
     } catch (error) {
       console.error("Failed to send confirmation email:", error);
-      return { success: false, error };
+      const errorMsg = error?.text || error?.message || JSON.stringify(error);
+      console.error("Error detail:", errorMsg);
+      return { success: false, error: errorMsg };
     }
   },
 };

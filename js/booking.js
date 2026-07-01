@@ -369,7 +369,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // Update email status in the modal
-  function updateEmailStatus(success, email) {
+  function updateEmailStatus(success, email, errorMsg) {
     const statusEl = document.getElementById("confirmEmailStatus");
     const textEl = document.getElementById("confirmEmailStatusText");
     if (!statusEl || !textEl) return;
@@ -381,7 +381,8 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       statusEl.className = "confirm-email-status confirm-email-failed";
       statusEl.querySelector("i").className = "fas fa-exclamation-triangle";
-      textEl.innerHTML = `Could not send email. Please save your booking reference above.`;
+      const detail = errorMsg ? ` (${errorMsg})` : "";
+      textEl.innerHTML = `Could not send email${detail}. Please save your booking reference above.`;
     }
   }
 
@@ -465,10 +466,15 @@ document.addEventListener("DOMContentLoaded", () => {
       // Send confirmation email via EmailJS
       if (typeof EmailService !== "undefined") {
         EmailService.sendConfirmation(newBooking).then((result) => {
-          updateEmailStatus(result.success, newBooking.email);
+          console.log("Email send result:", result);
+          updateEmailStatus(result.success, newBooking.email, result.error);
+        }).catch((err) => {
+          console.error("Email send exception:", err);
+          updateEmailStatus(false, newBooking.email, String(err));
         });
       } else {
-        updateEmailStatus(false, newBooking.email);
+        console.warn("EmailService is not defined");
+        updateEmailStatus(false, newBooking.email, "EmailService not loaded");
       }
     });
   }
