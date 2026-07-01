@@ -14,7 +14,9 @@ const EmailService = {
    */
   init() {
     if (typeof emailjs !== "undefined") {
-      emailjs.init(this.PUBLIC_KEY);
+      emailjs.init({
+        publicKey: this.PUBLIC_KEY,
+      });
     }
   },
 
