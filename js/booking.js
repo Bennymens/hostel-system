@@ -230,11 +230,167 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // ---- Booking Confirmation Modal ----
+  function showBookingConfirmModal(booking) {
+    // Remove existing modal if any
+    const existing = document.getElementById("bookingConfirmModal");
+    if (existing) existing.remove();
+
+    const roomOption = document.querySelector(`#bookRoomType option[value="${booking.room}"]`);
+    const roomPrice = roomOption ? parseInt(roomOption.dataset.price) : 0;
+    const serviceFee = Math.round(roomPrice * 0.05);
+    const total = roomPrice + serviceFee;
+
+    const moveInFormatted = formatDateDisplay(booking.moveIn);
+    const moveOutFormatted = formatDateDisplay(booking.moveOut);
+
+    const modalHtml = `
+      <div id="bookingConfirmModal" class="confirm-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="confirmModalTitle">
+        <div class="confirm-modal">
+          <!-- Animated success header -->
+          <div class="confirm-modal-header">
+            <div class="confirm-success-ring">
+              <div class="confirm-success-icon">
+                <i class="fas fa-check"></i>
+              </div>
+            </div>
+            <h2 id="confirmModalTitle">Booking Confirmed!</h2>
+            <p class="confirm-subtitle">Your accommodation has been successfully reserved</p>
+          </div>
+
+          <!-- Booking reference badge -->
+          <div class="confirm-ref-badge">
+            <span class="confirm-ref-label"><i class="fas fa-hashtag"></i> Booking Reference</span>
+            <span class="confirm-ref-code" id="confirmRefCode">${booking.ref}</span>
+            <button class="confirm-copy-btn" onclick="copyBookingRef('${booking.ref}')" title="Copy reference">
+              <i class="fas fa-copy"></i>
+            </button>
+          </div>
+
+          <!-- Details grid -->
+          <div class="confirm-details-grid">
+            <div class="confirm-detail-item">
+              <i class="fas fa-building"></i>
+              <div>
+                <span class="confirm-detail-label">Hostel</span>
+                <span class="confirm-detail-value">${booking.hostelName}</span>
+              </div>
+            </div>
+            <div class="confirm-detail-item">
+              <i class="fas fa-bed"></i>
+              <div>
+                <span class="confirm-detail-label">Room Type</span>
+                <span class="confirm-detail-value">${booking.room}</span>
+              </div>
+            </div>
+            <div class="confirm-detail-item">
+              <i class="fas fa-calendar-check"></i>
+              <div>
+                <span class="confirm-detail-label">Move In</span>
+                <span class="confirm-detail-value">${moveInFormatted}</span>
+              </div>
+            </div>
+            <div class="confirm-detail-item">
+              <i class="fas fa-calendar-times"></i>
+              <div>
+                <span class="confirm-detail-label">Move Out</span>
+                <span class="confirm-detail-value">${moveOutFormatted}</span>
+              </div>
+            </div>
+            <div class="confirm-detail-item">
+              <i class="fas fa-user"></i>
+              <div>
+                <span class="confirm-detail-label">Guest</span>
+                <span class="confirm-detail-value">${booking.name}</span>
+              </div>
+            </div>
+            <div class="confirm-detail-item">
+              <i class="fas fa-envelope"></i>
+              <div>
+                <span class="confirm-detail-label">Email</span>
+                <span class="confirm-detail-value">${booking.email}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Total amount -->
+          <div class="confirm-amount-box">
+            <div class="confirm-amount-row">
+              <span>Room price</span><span>${formatGHS(roomPrice)}</span>
+            </div>
+            <div class="confirm-amount-row">
+              <span>Service fee (5%)</span><span>${formatGHS(serviceFee)}</span>
+            </div>
+            <div class="confirm-amount-row confirm-amount-total">
+              <span>Total Paid</span><span>${formatGHS(total)}</span>
+            </div>
+          </div>
+
+          <!-- Email status -->
+          <div class="confirm-email-status" id="confirmEmailStatus">
+            <i class="fas fa-paper-plane"></i>
+            <span id="confirmEmailStatusText">Sending confirmation email to <strong>${booking.email}</strong>…</span>
+          </div>
+
+          <!-- Actions -->
+          <div class="confirm-modal-actions">
+            <a href="profile.html" class="btn btn-primary confirm-btn-primary">
+              <i class="fas fa-list-alt"></i> View My Bookings
+            </a>
+            <a href="search.html" class="btn btn-outline confirm-btn-outline">
+              <i class="fas fa-search"></i> Browse More Hostels
+            </a>
+          </div>
+
+          <p class="confirm-footnote">
+            <i class="fas fa-shield-alt"></i> Save your reference number for check-in verification
+          </p>
+        </div>
+      </div>
+    `;
+
+    document.body.insertAdjacentHTML("beforeend", modalHtml);
+    document.body.style.overflow = "hidden";
+
+    // Trigger entrance animation
+    requestAnimationFrame(() => {
+      const modal = document.getElementById("bookingConfirmModal");
+      if (modal) modal.classList.add("confirm-modal-visible");
+    });
+  }
+
+  // Copy booking reference to clipboard
+  window.copyBookingRef = function(ref) {
+    navigator.clipboard.writeText(ref).then(() => {
+      showToast("Reference copied to clipboard!", "success");
+    }).catch(() => {
+      showToast("Could not copy. Please copy manually.", "info");
+    });
+  };
+
+  // Update email status in the modal
+  function updateEmailStatus(success, email) {
+    const statusEl = document.getElementById("confirmEmailStatus");
+    const textEl = document.getElementById("confirmEmailStatusText");
+    if (!statusEl || !textEl) return;
+
+    if (success) {
+      statusEl.className = "confirm-email-status confirm-email-sent";
+      statusEl.querySelector("i").className = "fas fa-check-circle";
+      textEl.innerHTML = `Confirmation email sent to <strong>${email}</strong>`;
+    } else {
+      statusEl.className = "confirm-email-status confirm-email-failed";
+      statusEl.querySelector("i").className = "fas fa-exclamation-triangle";
+      textEl.innerHTML = `Could not send email. Please save your booking reference above.`;
+    }
+  }
+
   // Confirm booking
   const confirmBtn = document.getElementById("confirmBookingBtn");
   if (confirmBtn) {
     confirmBtn.addEventListener("click", async () => {
       const firstName = document.getElementById("bookFirstName").value.trim();
+      const lastName = document.getElementById("bookLastName").value.trim();
       const email = document.getElementById("bookEmail").value.trim();
       const phone = document.getElementById("bookPhone").value.trim();
       const terms = document.getElementById("agreeTerms").checked;
@@ -259,18 +415,31 @@ document.addEventListener("DOMContentLoaded", () => {
         "-" +
         Math.random().toString(36).substring(2, 6).toUpperCase();
 
+      // Get selected room price
+      const roomOption = roomSelect ? roomSelect.options[roomSelect.selectedIndex] : null;
+      const roomPrice = roomOption ? parseInt(roomOption.dataset.price) : 0;
+      const serviceFee = Math.round(roomPrice * 0.05);
+      const total = roomPrice + serviceFee;
+
+      // Get selected payment method
+      const activePayment = document.querySelector(".payment-option.active input");
+      const paymentMethod = activePayment ? activePayment.value : "momo";
+      const paymentLabels = { momo: "Mobile Money (MoMo)", card: "Debit / Credit Card", bank: "Bank Transfer" };
+
       const newBooking = {
         ref: ref,
         hostelId: hostel.id,
         hostelName: hostel.name,
-        room: roomSelect.value,
+        room: roomSelect ? roomSelect.value : selectedRoom.type,
         moveIn: document.getElementById("bookMoveIn").value,
         moveOut: document.getElementById("bookMoveOut").value,
-        name: `${firstName} ${document.getElementById("bookLastName").value.trim()}`,
+        name: `${firstName} ${lastName}`.trim(),
         email: email,
         phone: phone,
         status: "confirmed",
         date: new Date().toISOString(),
+        totalAmount: total,
+        paymentMethod: paymentLabels[paymentMethod] || paymentMethod,
       };
 
       try {
@@ -290,20 +459,17 @@ document.addEventListener("DOMContentLoaded", () => {
       bookings.push(newBooking);
       localStorage.setItem("acchostel_bookings", JSON.stringify(bookings));
 
-      // Show success
-      page.innerHTML = `
-        <div class="booking-success">
-          <div class="success-icon"><i class="fas fa-check"></i></div>
-          <h2>Booking Confirmed!</h2>
-          <p>Your room at ${hostel.name} has been reserved. Check your email for confirmation details.</p>
-          <div class="booking-ref">${ref}</div>
-          <p style="font-size:0.82rem; color:var(--gray-400);">Save this reference number for check-in</p>
-          <div style="display:flex; gap:1rem; justify-content:center; margin-top:1.5rem;">
-            <a href="profile.html" class="btn btn-primary">View My Bookings</a>
-            <a href="search.html" class="btn btn-outline">Browse More Hostels</a>
-          </div>
-        </div>
-      `;
+      // Show confirmation modal
+      showBookingConfirmModal(newBooking);
+
+      // Send confirmation email via EmailJS
+      if (typeof EmailService !== "undefined") {
+        EmailService.sendConfirmation(newBooking).then((result) => {
+          updateEmailStatus(result.success, newBooking.email);
+        });
+      } else {
+        updateEmailStatus(false, newBooking.email);
+      }
     });
   }
 });
