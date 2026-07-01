@@ -6,7 +6,7 @@
 const EmailService = {
   // EmailJS Public Key & Service Config
   PUBLIC_KEY: "Fas5Fx22Q4U40Ziog",
-  SERVICE_ID: "74739kelvyn",
+  SERVICE_ID: "service_gqquwl4",
   TEMPLATE_ID: "template_ggui0xo",
 
   /**
