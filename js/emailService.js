@@ -30,11 +30,13 @@ const EmailService = {
     }
 
     const templateParams = {
+      name: booking.name, // Maps to {{name}} in the body
       to_name: booking.name,
       to_email: booking.email,
-      email: booking.email, // Maps to {{email}} for Reply-To
+      email: booking.email, // Maps to {{email}} in To Email and Reply-To
       from_name: "UPSA HOSTELS",
       reply_to: booking.email, // Fallback reply_to value
+      title: `Booking for ${booking.hostelName} (${booking.room}) - Ref: ${booking.ref}`, // Maps to {{title}} in the body
       booking_ref: booking.ref,
       hostel_name: booking.hostelName,
       room_type: booking.room,
